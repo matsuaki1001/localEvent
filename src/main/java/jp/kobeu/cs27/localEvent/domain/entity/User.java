@@ -2,6 +2,7 @@ package jp.kobeu.cs27.localEvent.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 /**
@@ -27,5 +28,9 @@ public class User {
     // パスワード
     private String password;
 
-    
+    // ユーザーの好みのカテゴリ
+    @ManyToOne
+    private Category category;
+
+
 }

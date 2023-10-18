@@ -2,6 +2,7 @@ package jp.kobeu.cs27.localEvent.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 /**
@@ -43,13 +44,15 @@ public class Event {
     private String organizer;
 
     // イベントのカテゴリ
-    private String category;
+    @ManyToOne
+    private Category category;
 
     // イベントの画像
     private String image;
 
     // イベントのタグ
-    private String tag;
+    @ManyToOne
+    private Tag tag;
 
-    
+
 }
