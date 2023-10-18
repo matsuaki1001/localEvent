@@ -16,7 +16,7 @@ import lombok.Setter;
 public class CategoryForm {
     
     //カテゴリID
-    private String cid;
+    private int cid;
 
     //カテゴリ名
     @NotBlank

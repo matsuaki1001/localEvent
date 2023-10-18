@@ -26,6 +26,6 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
      * @param cid カテゴリID
      * @return カテゴリがあるかどうか
      */
-    boolean existsByCid(String cid);
+    boolean existsByCid(int cid);
 
 }
