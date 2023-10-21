@@ -17,7 +17,7 @@ public class Category{
         
         // カテゴリID
         @Id
-        private String cid;
+        private int cid;
     
         // カテゴリ名
         private String name;

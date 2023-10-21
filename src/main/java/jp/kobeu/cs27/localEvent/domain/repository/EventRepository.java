@@ -19,4 +19,6 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
      * 
      */
     List <Event> findAllByOrderByEidAsc();
+
+    
 }
