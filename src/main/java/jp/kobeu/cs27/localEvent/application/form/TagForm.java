@@ -15,7 +15,7 @@ import lombok.Setter;
 public class TagForm {
     
     //タグID
-    private String tid;
+    private int tid;
 
     //タグ名
     private String name;

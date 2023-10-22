@@ -1,8 +1,11 @@
 package jp.kobeu.cs27.localEvent.domain.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 
 /**
@@ -14,7 +17,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Event {
-    
+
     // イベントID
     @Id
     private String eid;
@@ -51,8 +54,7 @@ public class Event {
     private String image;
 
     // イベントのタグ
-    @ManyToOne
-    private Tag tag;
-
+    @OneToMany
+    private List<Tag> tags;
 
 }

@@ -17,7 +17,7 @@ public class Tag {
 
     // タグID
     @Id
-    private String tid;
+    private int tid;
 
     // タグ名
     private String name;

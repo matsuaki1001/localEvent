@@ -15,5 +15,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 public class EventService {
+
+    public void deleteTag(int tid) {
+    }
     
 }

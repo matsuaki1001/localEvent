@@ -1,5 +1,7 @@
 package jp.kobeu.cs27.localEvent.domain.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -14,7 +16,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    
+
     // ユーザーID
     @Id
     private String id;
@@ -32,5 +34,8 @@ public class User {
     @ManyToOne
     private Category category;
 
+    // ユーザーの好みのタグ
+    @ManyToOne
+    private List<Tag> tags;
 
 }
