@@ -10,6 +10,8 @@ import jp.kobeu.cs27.localEvent.domain.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.*;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TagService {
@@ -29,7 +31,7 @@ public class TagService {
         final int tid = form.getTid();
 
         // タグが既に存在する場合は例外を投げる
-        if (tags.existsById(tid)) {
+        if (tags.existsByTid(tid)) {
             throw new ValidationException(
                     TAG_ALREADY_EXISTS,
                     "create the tag",
@@ -53,7 +55,7 @@ public class TagService {
         final int tid = form.getTid();
 
         // タグが存在しない場合は例外を投げる
-        if (!tags.existsById(tid)) {
+        if (!tags.existsByTid(tid)) {
             throw new ValidationException(
                     TAG_DOES_NOT_EXIST,
                     "update the tag",
@@ -73,7 +75,7 @@ public class TagService {
     public void deleteTag(int tid) {
 
         // タグが存在しない場合は例外を投げる
-        if (!tags.existsById(tid)) {
+        if (!tags.existsByTid(tid)) {
             throw new ValidationException(
                     TAG_DOES_NOT_EXIST,
                     "delete the tag",
@@ -94,7 +96,7 @@ public class TagService {
      * @return 存在する場合はtrue、存在しない場合はfalse
      */
      public boolean existsTag(int tid) {
-        return tags.existsById(tid);
+        return tags.existsByTid(tid);
      }
 
     /**
@@ -106,7 +108,7 @@ public class TagService {
     public Tag getTag(int tid) {
 
         // タグが存在しない場合は例外を投げる
-        if (!tags.existsById(tid)) {
+        if (!tags.existsByTid(tid)) {
             throw new ValidationException(
                     TAG_DOES_NOT_EXIST,
                     "get the tag",
@@ -122,8 +124,8 @@ public class TagService {
      * 
      * @return タグの一覧
      */
-    public Iterable<Tag> getTags() {
-        return tags.findAll();
+    public List<Tag> getTags() {
+        return tags.findAllByOrderByTidAsc();
     }
 
 }

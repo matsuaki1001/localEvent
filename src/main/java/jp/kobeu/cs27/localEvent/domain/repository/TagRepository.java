@@ -22,10 +22,11 @@ public interface TagRepository extends JpaRepository<Tag, Integer> {
     List<Tag> findAllByOrderByTidAsc();
 
     /**
-     * タグIDに対応するカテゴリがあるか
+     * カテゴリIDに対応するカテゴリがあるか
      * 
-     * @param cid タグID
-     * @return タグがあるかどうか
+     * @param tid カテゴリID
+     * @return カテゴリがあるかどうか
      */
-    boolean existsByTid(String tid);
+    boolean existsByTid(int tid);
+
 }

@@ -32,8 +32,8 @@ public class TagController {
 
         // 入力チェックエラーがある場合は、入力画面に戻す
         if(bindingResult.hasErrors()) {
-            attributes.addFlashAttribute("isTAGFormError", true);
-            return "tags/add";
+            attributes.addFlashAttribute("isTagFormError", true);
+            return "redirect:/";
 
         }
 
@@ -42,12 +42,12 @@ public class TagController {
             tagService.addTag(form);
         }catch (ValidationException e) {
             //タグが既に存在する場合は、エラーフラグをオンにする
-            attributes.addFlashAttribute("isTAGAlreadyExists", true);
-            return "redirect:/tags/add";
+            attributes.addFlashAttribute("isTagAlreadyExists", true);
+            return "redirect:/";
         }
 
         //タグ一覧画面にリダイレクトする
-        return "redirect:/tags";
+        return "tagpage";
 
     }
 

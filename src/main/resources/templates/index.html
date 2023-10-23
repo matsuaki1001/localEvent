@@ -3,8 +3,21 @@
     <head>
         <meta charset="UTF-8" />
         <title>Spring Boot Sample</title>
+        <link rel="stylesheet"
+            th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
+        <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"
+            type="text/javascript"></script>
     </head>
     <body>
         <h1>Spring Boot Sample</h1>
+        <div class="col mb-3">
+            <form method="get"
+                th:action="@{/tags}">
+                <input class="btn btn-danger "
+                    type="submit"
+                    value="タグ">
+            </form>
+        </div>
+
     </body>
 </html>

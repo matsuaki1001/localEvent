@@ -1,6 +1,8 @@
 package jp.kobeu.cs27.localEvent.domain.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -17,6 +19,7 @@ public class Tag {
 
     // タグID
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tid;
 
     // タグ名
