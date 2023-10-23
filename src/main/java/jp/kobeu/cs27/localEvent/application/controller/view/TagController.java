@@ -1,9 +1,16 @@
 package jp.kobeu.cs27.localEvent.application.controller.view;
 
+import org.springframework.boot.context.properties.bind.validation.ValidationErrors;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.kobeu.cs27.localEvent.application.form.TagForm;
+import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.service.TagService;
 import lombok.RequiredArgsConstructor;
 
@@ -20,13 +27,26 @@ public class TagController {
      * @return タグ一覧画面
      */
     @PostMapping("/tags")
-    public String addTag(Model model, REdirestAttributes attributes,
-    @ModelAttribute @Validated TagForm form, BindingResult binding) {
+    public String addTag(Model model, RedirectAttributes attributes,
+    @ModelAttribute @Validated TagForm form, BindingResult bindingResult) {
 
-        // タグを登録する
-        tagService.addTag(form);
+        // 入力チェックエラーがある場合は、入力画面に戻す
+        if(bindingResult.hasErrors()) {
+            attributes.addFlashAttribute("isTAGFormError", true);
+            return "tags/add";
 
-        // タグ一覧画面にリダイレクトする
+        }
+
+        //タグを登録する
+        try{
+            tagService.addTag(form);
+        }catch (ValidationException e) {
+            //タグが既に存在する場合は、エラーフラグをオンにする
+            attributes.addFlashAttribute("isTAGAlreadyExists", true);
+            return "redirect:/tags/add";
+        }
+
+        //タグ一覧画面にリダイレクトする
         return "redirect:/tags";
 
     }
