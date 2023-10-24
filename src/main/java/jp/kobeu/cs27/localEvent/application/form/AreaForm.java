@@ -7,21 +7,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * カテゴリ登録・更新フォーム
+ * エリア登録・更新フォーム
  */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryForm {
-    
-    //カテゴリID
-    private int cid;
+public class AreaForm {
 
-    //カテゴリ名
+    // エリアID
+    private int aid;
+
+    // エリア名
     @NotBlank
     private String name;
 
-    //カテゴリの説明
+    // エリアの説明
     private String description;
 }

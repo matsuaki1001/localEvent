@@ -1,5 +1,5 @@
 package jp.kobeu.cs27.localEvent.application.controller.view;
 
-public class CategoryController {
-    
+public class AreaController {
+
 }

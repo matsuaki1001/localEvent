@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8" />
-        <title>Spring Boot Sample</title>
+        <title>Tag Sample</title>
         <link rel="stylesheet"
             th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
         <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"
@@ -10,6 +10,20 @@
     </head>
     <body>
         <h1>Tag page Sample</h1>
-        
-    </body>
-</html>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form method="get" th:action="@{/tags}"
+                        th:object="${tagForm}">
+                        <input class="form-control"
+                           placeholder="タグID" type=text>
+                        <input class="form-control"
+                            placeholder="タグの名前" type=text>
+                        <input class="form-control"
+                            placeholder="タグの説明" type=text>
+                    </form>
+
+                </div>
+
+            </body>
+        </html>

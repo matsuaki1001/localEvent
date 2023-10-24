@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jp.kobeu.cs27.localEvent.application.form.TagForm;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -20,6 +21,14 @@ public class PageController {
    public String loginPage() {
 
       return "index";
+   }
+
+   @GetMapping("/tags")
+   public String showTagPage(Model model){
+
+      model.addAttribute(new TagForm());
+
+      return "tagpage";
    }
 
 }

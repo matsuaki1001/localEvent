@@ -21,35 +21,6 @@ public class TagController {
 
     private final TagService tagService;
 
-    /**
-     * タグを登録する
-     * 
-     * @param form
-     * @return タグ一覧画面
-     */
-    @GetMapping("/tags")
-    public String addTag(Model model, RedirectAttributes attributes,
-    @ModelAttribute @Validated TagForm form, BindingResult bindingResult) {
-
-        //入力チェックエラーがある場合は、入力画面に戻す
-        if(bindingResult.hasErrors()) {
-            attributes.addFlashAttribute("isTagFormError", true);
-            return "redirect:/";
-
-        }
-
-        //タグを登録する
-        try{
-            tagService.addTag(form);
-        }catch (ValidationException e) {
-            //タグが既に存在する場合は、エラーフラグをオンにする
-            attributes.addFlashAttribute("isTagAlreadyExists", true);
-            return "redirect:/";
-        }
-
-        //タグ一覧画面にリダイレクトする
-        return "tagpage";
-
-    }
+    
 
 }

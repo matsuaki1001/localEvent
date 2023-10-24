@@ -3,6 +3,8 @@ package jp.kobeu.cs27.localEvent.domain.entity;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -20,6 +22,7 @@ public class Event {
 
     // イベントID
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int eid;
 
     // イベント名
@@ -28,33 +31,38 @@ public class Event {
     // イベントの説明
     private String description;
 
-    // イベントの開始日時
-    private String start;
+    // イベントの開始日
+    private String startday;
 
-    // イベントの終了日時
-    private String end;
+    // イベントの終了日
+    private String endday;
 
-    // イベントの場所
+    // イベントの開催時間の開始
+    private String starttime;
+
+    // イベントの開催時間の終了
+    private String endtime;
+
+    // イベントの会場
     private String place;
-
-    // イベントの参加人数
-    private int capacity;
 
     // イベントの参加費
     private int fee;
 
+    // イベントに駐車場があるか
+    private boolean parking;
+
+    // イベントのアクセス
+    private String access;
+
+    // イベントのエリア
+    @ManyToOne
+    private Area Area;
+
     // イベントの主催者
     private String organizer;
 
-    // イベントのカテゴリ
-    @ManyToOne
-    private Category category;
-
-    // イベントの画像
-    private String image;
-
-    // イベントのタグ
-    @OneToMany
-    private List<Tag> tags;
+    // イベントの定員
+    private int capacity;
 
 }

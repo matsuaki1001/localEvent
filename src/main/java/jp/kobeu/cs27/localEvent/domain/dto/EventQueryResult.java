@@ -35,8 +35,8 @@ public class EventQueryResult {
     // イベントの主催者
     private final String organizer;
 
-    // イベントのカテゴリID
-    private final Integer cid;
+    // イベントのエリアID
+    private final Integer aid;
 
     // イベントの画像
     private final String image;

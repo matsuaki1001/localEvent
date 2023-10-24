@@ -1,5 +1,6 @@
 package jp.kobeu.cs27.localEvent.application.form;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class TagForm {
     private int tid;
 
     //タグ名
+    @NotBlank
     private String name;
 
     //タグの説明

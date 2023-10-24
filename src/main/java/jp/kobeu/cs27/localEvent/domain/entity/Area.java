@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 /**
- * カテゴリを表すエンティティ
+ * エリアを表すエンティティ
  */
 @Entity
 @Getter
@@ -15,18 +15,17 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Category{
-        
-        // カテゴリID
+public class Area {
+
+        // エリアID
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int cid;
-    
-        // カテゴリ名
+        private int aid;
+
+        // エリア名
         private String name;
 
-        // カテゴリの説明
+        // エリアの説明
         private String description;
 
-        
 }

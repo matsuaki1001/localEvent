@@ -3,6 +3,8 @@ package jp.kobeu.cs27.localEvent.domain.entity;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -20,6 +22,7 @@ public class User {
 
     // ユーザーID
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     // ユーザー名
@@ -31,12 +34,7 @@ public class User {
     // パスワード
     private String password;
 
-    // ユーザーの好みのカテゴリ
+    // ユーザーの住んでいる地域
     @ManyToOne
-    private Category category;
-
-    // ユーザーの好みのタグ
-    @OneToMany
-    private List<Tag> tags;
-
+    private Area Area;
 }
