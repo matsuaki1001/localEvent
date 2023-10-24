@@ -20,7 +20,7 @@ public class Event {
 
     // イベントID
     @Id
-    private String eid;
+    private int eid;
 
     // イベント名
     private String name;

@@ -11,17 +11,15 @@ import lombok.AllArgsConstructor;
 @Controller
 @AllArgsConstructor
 public class PageController {
-    
-/**
- * ログイン画面を表示する
- */
 
- @GetMapping("/")
- public String loginPage(Model model, RedirectAttributes attributes, BindingResult bindingResult ) {
-     
-    return "index";
- }
+   /**
+    * ログイン画面を表示する
+    */
 
- 
+   @GetMapping("/")
+   public String loginPage() {
+
+      return "index";
+   }
 
 }

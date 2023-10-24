@@ -20,7 +20,7 @@ public class User {
 
     // ユーザーID
     @Id
-    private String id;
+    private int id;
 
     // ユーザー名
     private String name;

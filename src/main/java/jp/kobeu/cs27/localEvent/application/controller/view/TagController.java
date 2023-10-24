@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -26,11 +27,11 @@ public class TagController {
      * @param form
      * @return タグ一覧画面
      */
-    @PostMapping("/tags")
+    @GetMapping("/tags")
     public String addTag(Model model, RedirectAttributes attributes,
     @ModelAttribute @Validated TagForm form, BindingResult bindingResult) {
 
-        // 入力チェックエラーがある場合は、入力画面に戻す
+        //入力チェックエラーがある場合は、入力画面に戻す
         if(bindingResult.hasErrors()) {
             attributes.addFlashAttribute("isTagFormError", true);
             return "redirect:/";
