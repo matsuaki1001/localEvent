@@ -16,7 +16,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class EventService {
 
-    public void deleteTag(int tid) {
-    }
+   
+
+    
 
 }

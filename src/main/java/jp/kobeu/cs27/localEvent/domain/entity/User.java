@@ -23,7 +23,7 @@ public class User {
     // ユーザーID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String uid;
 
     // ユーザー名
     private String name;

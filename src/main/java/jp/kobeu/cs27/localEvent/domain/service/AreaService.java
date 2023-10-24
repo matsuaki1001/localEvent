@@ -1,22 +1,25 @@
 package jp.kobeu.cs27.localEvent.domain.service;
 
-import org.springframework.stereotype.Service;
-
-import jp.kobeu.cs27.localEvent.application.form.AreaForm;
-import jp.kobeu.cs27.localEvent.domain.entity.Area;
-import jp.kobeu.cs27.localEvent.domain.repository.AreaRepository;
-import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
-import org.springframework.transaction.annotation.Transactional;
-import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.*;
+import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.Area_ALREADY_EXISTS;
+import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.Area_DOES_NOT_EXIST;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import jp.kobeu.cs27.localEvent.application.form.AreaForm;
+import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
+import jp.kobeu.cs27.localEvent.domain.entity.Area;
+import jp.kobeu.cs27.localEvent.domain.repository.AreaRepository;
+import jp.kobeu.cs27.localEvent.domain.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class AreaService {
-    private final AreaRepository categories;
+    private final AreaRepository areas;
+    private final EventRepository events;
 
     /**
      * エリアを登録する
@@ -32,7 +35,7 @@ public class AreaService {
         final int aid = form.getAid();
 
         // エリアが登録済みであった場合、例外を投げる
-        if (categories.existsByaid(aid)) {
+        if (areas.existsByAid(aid)) {
             throw new ValidationException(
                     Area_ALREADY_EXISTS,
                     "create the Area",
@@ -41,7 +44,7 @@ public class AreaService {
         }
 
         // エリアを登録する
-        return categories.save(
+        return areas.save(
                 new Area(
                         form.getAid(),
                         form.getName(),
@@ -56,7 +59,7 @@ public class AreaService {
      * @return エリアが存在するかどうか
      */
     public boolean existsArea(int aid) {
-        return categories.existsByaid(aid);
+        return areas.existsByAid(aid);
     }
 
     /**
@@ -72,7 +75,7 @@ public class AreaService {
         final int aid = form.getAid();
 
         // エリアが登録されていない場合、例外を投げる
-        if (!categories.existsByaid(aid)) {
+        if (!areas.existsByAid(aid)) {
             throw new ValidationException(
                     Area_DOES_NOT_EXIST,
                     "update the Area",
@@ -81,7 +84,7 @@ public class AreaService {
         }
 
         // エリアを更新する
-        return categories.save(
+        return areas.save(
                 new Area(
                         form.getAid(),
                         form.getName(),
@@ -99,7 +102,7 @@ public class AreaService {
     public void deleteArea(int aid) {
 
         // エリアが登録されていない場合、例外を投げる
-        if (!categories.existsByaid(aid)) {
+        if (!areas.existsByAid(aid)) {
             throw new ValidationException(
                     Area_DOES_NOT_EXIST,
                     "delete the Area",
@@ -107,8 +110,11 @@ public class AreaService {
                             "Area %s not found", aid));
         }
 
+        Area area = areas.getReferenceById(aid);
+
         // エリアを削除する
-        categories.deleteById(aid);
+        areas.deleteById(aid);
+        events.deleteByArea(area);
 
     }
 
@@ -122,7 +128,7 @@ public class AreaService {
     public Area getArea(int aid) {
 
         // エリアが登録されていない場合、例外を投げる
-        if (!categories.existsByaid(aid)) {
+        if (!areas.existsByAid(aid)) {
             throw new ValidationException(
                     Area_DOES_NOT_EXIST,
                     "get the Area",
@@ -131,7 +137,7 @@ public class AreaService {
         }
 
         // エリアを取得する
-        return categories.findById(aid).orElseThrow(() -> new ValidationException(
+        return areas.findById(aid).orElseThrow(() -> new ValidationException(
                 Area_DOES_NOT_EXIST,
                 "get the Area",
                 String.format(
@@ -144,8 +150,8 @@ public class AreaService {
      * @return エリアのリスト
      */
 
-    public List<Area> getAllCategories() {
-        return categories.findAllByOrderByaidAsc();
+    public List<Area> getAllareas() {
+        return areas.findAllByOrderByAidAsc();
     }
 
 }

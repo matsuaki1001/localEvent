@@ -18,7 +18,7 @@ public interface AreaRepository extends JpaRepository<Area, Integer> {
      * @return エリアのリスト
      * 
      */
-    List<Area> findAllByOrderByaidAsc();
+    List<Area> findAllByOrderByAidAsc();
 
     /**
      * エリアIDに対応するエリアがあるか
@@ -26,6 +26,6 @@ public interface AreaRepository extends JpaRepository<Area, Integer> {
      * @param aid エリアID
      * @return エリアがあるかどうか
      */
-    boolean existsByaid(int aid);
+    boolean existsByAid(int aid);
 
 }

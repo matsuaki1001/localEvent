@@ -18,5 +18,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      * @return ユーザーのリスト
      * 
      */
-    List<User> findAllByOrderByIdAsc();
+    List<User> findAllByOrderByUidAsc();
 }

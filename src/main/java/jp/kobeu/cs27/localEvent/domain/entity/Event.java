@@ -1,13 +1,11 @@
 package jp.kobeu.cs27.localEvent.domain.entity;
 
-import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.*;
 
 /**
@@ -57,12 +55,15 @@ public class Event {
 
     // イベントのエリア
     @ManyToOne
-    private Area Area;
+    private Area area;
 
     // イベントの主催者
     private String organizer;
 
     // イベントの定員
     private int capacity;
+
+    //　ユーザのタグとイベントの一致回数
+    private int match;
 
 }

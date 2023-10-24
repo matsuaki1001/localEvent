@@ -1,8 +1,11 @@
 package jp.kobeu.cs27.localEvent.domain.repository;
 import java.util.List;
-import jp.kobeu.cs27.localEvent.domain.entity.Event;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import jp.kobeu.cs27.localEvent.domain.entity.Area;
+import jp.kobeu.cs27.localEvent.domain.entity.Event;
 
 /*
  * イベントのリポジトリ
@@ -19,6 +22,21 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
      * 
      */
     List <Event> findAllByOrderByEidAsc();
+
+    /**
+     * イベントIDが一致するイベントを削除する
+     * @param eid イベントID
+     */
+    void deleteByEid(int eid);
+
+    /**
+     * 場所が一致するイベントをすべて削除する
+     * @param area 場所
+     */
+     void deleteByArea(Area area);
+
+
+
 
     
 }

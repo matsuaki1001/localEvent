@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /*
- * ユーザーのリポジトリ
+ * イベントとタグの関連のリポジトリ
  */
 @Repository
 public interface EventTagRepository extends JpaRepository<EventTag, Integer> {
@@ -18,5 +18,14 @@ public interface EventTagRepository extends JpaRepository<EventTag, Integer> {
      * @return ユーザーのリスト
      * 
      */
-    List<EventTag> findAllByOrderByIdAsc();
+    List<EventTag> findAllByOrderByEtidAsc();
+
+    /**
+     * タグが一致するイベントタグをすべて削除する
+     * 
+     * @param tid タグID
+     */
+     void deleteByEtid(int etid);
+
+
 }

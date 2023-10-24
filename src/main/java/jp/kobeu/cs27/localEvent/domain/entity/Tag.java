@@ -14,7 +14,6 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Tag {
 
     // タグID
@@ -27,7 +26,5 @@ public class Tag {
 
     // タグの説明
     private String description;
-
-    
 
 }

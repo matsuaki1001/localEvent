@@ -18,5 +18,5 @@ public interface UserTagRepository extends JpaRepository<UserTag, Integer> {
      * @return ユーザーのリスト
      * 
      */
-    List<UserTag> findAllByOrderByIdAsc();
+    List<UserTag> findAllByOrderByUtidAsc();
 }

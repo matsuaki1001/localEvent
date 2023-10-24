@@ -1,22 +1,27 @@
 package jp.kobeu.cs27.localEvent.domain.service;
 
-import org.springframework.stereotype.Service;
+import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.TAG_ALREADY_EXISTS;
+import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.TAG_DOES_NOT_EXIST;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import jp.kobeu.cs27.localEvent.application.form.TagForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.entity.Tag;
+import jp.kobeu.cs27.localEvent.domain.repository.EventRepository;
+import jp.kobeu.cs27.localEvent.domain.repository.EventTagRepository;
 import jp.kobeu.cs27.localEvent.domain.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
-import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.*;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class TagService {
     private final TagRepository tags;
-    private final EventService events;
+    private final EventRepository events;
+    private final EventTagRepository eventTags;
 
     /**
      * タグを追加する
@@ -85,8 +90,8 @@ public class TagService {
         // タグを削除する
         tags.deleteById(tid);
 
-        // タグを削除したことにより、イベントのタグも削除する
-        events.deleteTag(tid);
+        // タグとイベントの関連を削除する
+        eventTags.deleteByEtid(tid);
     }
 
     /**
