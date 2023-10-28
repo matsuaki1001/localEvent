@@ -19,46 +19,46 @@
                         th:object="${eventForm}">
                         <input class="form-control" pattern="[0-9a-zA-Z_\\-]+"
                             placeholder="イベントID" required th:field="*{eid}"
-                            type=text readonly>
+                            type=text >
                         <input class="form-control"
                             placeholder="イベントの名前" required th:field="*{name}"
-                            type=text readonly>
+                            type=text >
                         <input class="form-control"
                             placeholder="イベントの説明" required
-                            th:field="*{description}" type=text readonly>
+                            th:field="*{description}" type=text >
                         <input class="form-control"
                             placeholder="イベントの開始日" required
-                            th:field="*{startday}" type=text readonly>
+                            th:field="*{startday}" type=text >
                         <input class="form-control"
                             placeholder="イベントの終了日" required
-                            th:field="*{endday}" type=text readonly>
+                            th:field="*{endday}" type=text >
                         <input class="form-control"
                             placeholder="イベントの開始時間" required
-                            th:field="*{starttime}" type=text readonly>
+                            th:field="*{starttime}" type=text >
                         <input class="form-control"
                             placeholder="イベントの終了時間" required
-                            th:field="*{endtime}" type=text readonly>
+                            th:field="*{endtime}" type=text >
                         <input class="form-control"
                             placeholder="イベントの場所" required
-                            th:field="*{place}" type=text readonly>
+                            th:field="*{place}" type=text >
                         <input class="form-control"
                             placeholder="イベントの参加費用" required
-                            th:field="*{fee}" type=text readonly>
+                            th:field="*{fee}" type=text >
                         <input class="form-control"
                             placeholder="駐車場があるかどうか" required
-                            th:field="*{parking}" type=checkbox readonly>
+                            th:field="*{parking}" type=checkbox >
                         <input class="form-control"
                             placeholder="イベントのアクセス" required
-                            th:field="*{access}" type=text readonly>
+                            th:field="*{access}" type=text >
                         <input class="form-control"
                             placeholder="エリアID" required
-                            th:field="*{aid}" type=text readonly>
+                            th:field="*{aid}" type=text >
                         <input class="form-control"
                             placeholder="イベントの主催者" required
-                            th:field="*{organizer}" type=text readonly>
+                            th:field="*{organizer}" type=text >
                         <input class="form-control"
                             placeholder="イベントの参加人数" required
-                            th:field="*{capacity}" type=text readonly>
+                            th:field="*{capacity}" type=text >
                         <input class="btn btn-primary" type="submit" value="登録">
                     </form>
                 </div>
