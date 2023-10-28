@@ -8,11 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import jp.kobeu.cs27.localEvent.application.form.AreaForm;
-import jp.kobeu.cs27.localEvent.application.form.TagForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
-import jp.kobeu.cs27.localEvent.domain.entity.Area;
 import jp.kobeu.cs27.localEvent.domain.service.AreaService;
 import lombok.AllArgsConstructor;
 
@@ -34,7 +31,7 @@ public class AreaController {
 
         // フォームにバリデーション違反があった場合、タグ登録ページに戻る
         if (bindingResult.hasErrors()) {
-            attributes.addFlashAttribute("isTagFormError", true);
+            attributes.addFlashAttribute("isAreaFormError", true);
 
             return "redirect:/area";
         }

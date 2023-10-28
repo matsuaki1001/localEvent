@@ -43,7 +43,7 @@ public class UserController {
 
         // タグが既に存在するか確認する
         if (userService.existsUser(uid)) {
-            attributes.addFlashAttribute("isAreaAlreadyExistsError", true);
+            attributes.addFlashAttribute("isUserAlreadyExistsError", true);
 
             return "redirect:/user";
         }
@@ -76,7 +76,7 @@ public class UserController {
         try {
             userService.addUser(form);
         } catch (ValidationException e) {
-            attributes.addFlashAttribute("isAreaAlreadyExistsError", true);
+            attributes.addFlashAttribute("isUserAlreadyExistsError", true);
             return "redirect:/user";
         }
 

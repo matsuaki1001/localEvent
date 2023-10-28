@@ -4,16 +4,11 @@ import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.USER_AL
 import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.USER_DOES_NOT_EXIST;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.UserForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
-import jp.kobeu.cs27.localEvent.domain.entity.Event;
 import jp.kobeu.cs27.localEvent.domain.entity.User;
-import jp.kobeu.cs27.localEvent.domain.repository.EventRepository;
 import jp.kobeu.cs27.localEvent.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
