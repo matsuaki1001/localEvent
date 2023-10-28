@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jp.kobeu.cs27.localEvent.application.form.AreaForm;
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.TagForm;
+import jp.kobeu.cs27.localEvent.application.form.UserForm;
 import jp.kobeu.cs27.localEvent.application.form.TagForm;
 import lombok.AllArgsConstructor;
 
@@ -27,7 +28,7 @@ public class PageController {
    }
 
    @GetMapping("/tag")
-   public String showTagPage(Model model){
+   public String showTagPage(Model model) {
 
       model.addAttribute(new TagForm());
 
@@ -35,22 +36,27 @@ public class PageController {
    }
 
    @GetMapping("/area")
-   public String showAreaPage(Model model){
+   public String showAreaPage(Model model) {
 
       model.addAttribute(new AreaForm());
 
       return "areapage";
    }
 
-
    @GetMapping("/event")
-   public String showEventPage(Model model){
+   public String showEventPage(Model model) {
 
       model.addAttribute(new EventForm());
 
       return "eventpage";
    }
 
-   
+   @GetMapping("/user")
+   public String showUserPage(Model model) {
+
+      model.addAttribute(new UserForm());
+
+      return "userpage";
+   }
 
 }

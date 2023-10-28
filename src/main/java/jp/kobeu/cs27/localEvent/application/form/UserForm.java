@@ -15,7 +15,7 @@ import lombok.Setter;
 public class UserForm {
     
     //ユーザーID
-    private String uid;
+    private int uid;
 
     //ユーザー名
     private String name;

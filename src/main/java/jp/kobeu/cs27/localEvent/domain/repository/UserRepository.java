@@ -1,6 +1,8 @@
 package jp.kobeu.cs27.localEvent.domain.repository;
 
 import java.util.List;
+
+import jp.kobeu.cs27.localEvent.domain.entity.Event;
 import jp.kobeu.cs27.localEvent.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -19,4 +21,15 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      * 
      */
     List<User> findAllByOrderByUidAsc();
+
+    /**
+     * ユーザーIDが一致するユーザーがあるかどうか
+     * 
+     * @param uid ユーザーID
+     * 
+     * @return ユーザーがあるかどうか
+     */
+
+    boolean existsByUid(int uid);
+
 }
