@@ -25,11 +25,9 @@ public class EventTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int etid;
 
-    // イベント
-    @ManyToOne
-    private Event event;
+    // イベントID
+    private int eid;
 
-    // タグ
-    @ManyToOne
-    private Tag tag;
+    // タグID
+    private int tid;
 }

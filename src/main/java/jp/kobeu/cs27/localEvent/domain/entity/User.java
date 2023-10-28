@@ -23,7 +23,7 @@ public class User {
     // ユーザーID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String uid;
+    private int uid;
 
     // ユーザー名
     private String name;
@@ -34,7 +34,6 @@ public class User {
     // パスワード
     private String password;
 
-    // ユーザーの住んでいる地域
-    @ManyToOne
-    private Area Area;
+    // ユーザのエリアID
+    private int aid;
 }

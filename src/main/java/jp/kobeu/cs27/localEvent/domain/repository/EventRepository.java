@@ -30,10 +30,13 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     void deleteByEid(int eid);
 
     /**
-     * 場所が一致するイベントをすべて削除する
-     * @param area 場所
+     * イベントIDに対応するイベントがあるか
+     * 
+     * @param eid イベントID
+     * @return イベントがあるかどうか
      */
-     void deleteByArea(Area area);
+    boolean existsByEid(int eid);
+
 
 
 

@@ -114,7 +114,7 @@ public class AreaService {
 
         // エリアを削除する
         areas.deleteById(aid);
-        events.deleteByArea(area);
+        
 
     }
 

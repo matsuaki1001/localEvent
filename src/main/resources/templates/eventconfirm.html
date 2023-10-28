@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Spring Boot Sample</title>
+        <link rel="stylesheet"
+            th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
+        <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"
+            type="text/javascript"></script>
+    </head>
+    <body>
+
+        <h5>タグ登録確認</h5>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form method="post" th:action="@{/event/register}"
+                        th:object="${eventForm}">
+                        <input class="form-control" pattern="[0-9a-zA-Z_\\-]+"
+                            placeholder="イベントID" required th:field="*{eid}"
+                            type=text readonly>
+                        <input class="form-control"
+                            placeholder="イベントの名前" required th:field="*{name}"
+                            type=text readonly>
+                        <input class="form-control"
+                            placeholder="イベントの説明" required
+                            th:field="*{description}" type=text readonly>
+                        <input class="form-control"
+                            placeholder="イベントの開始日" required
+                            th:field="*{startday}" type=text readonly>
+                        <input class="form-control"
+                            placeholder="イベントの終了日" required
+                            th:field="*{endday}" type=text readonly>
+                        <input class="form-control"
+                            placeholder="イベントの開始時間" required
+                            th:field="*{starttime}" type=text readonly>
+                        <input class="form-control"
+                            placeholder="イベントの終了時間" required
+                            th:field="*{endtime}" type=text readonly>
+                        <input class="form-control"
+                            placeholder="イベントの場所" required
+                            th:field="*{place}" type=text readonly>
+                        <input class="form-control"
+                            placeholder="イベントの参加費用" required
+                            th:field="*{fee}" type=text readonly>
+                        <input class="form-control"
+                            placeholder="駐車場があるかどうか" required
+                            th:field="*{parking}" type=checkbox readonly>
+                        <input class="form-control"
+                            placeholder="イベントのアクセス" required
+                            th:field="*{access}" type=text readonly>
+                        <input class="form-control"
+                            placeholder="エリアID" required
+                            th:field="*{aid}" type=text readonly>
+                        <input class="form-control"
+                            placeholder="イベントの主催者" required
+                            th:field="*{organizer}" type=text readonly>
+                        <input class="form-control"
+                            placeholder="イベントの参加人数" required
+                            th:field="*{capacity}" type=text readonly>
+                        <input class="btn btn-primary" type="submit" value="登録">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>

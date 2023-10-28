@@ -6,6 +6,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jp.kobeu.cs27.localEvent.application.form.AreaForm;
+import jp.kobeu.cs27.localEvent.application.form.EventForm;
+import jp.kobeu.cs27.localEvent.application.form.TagForm;
 import jp.kobeu.cs27.localEvent.application.form.TagForm;
 import lombok.AllArgsConstructor;
 
@@ -23,12 +26,29 @@ public class PageController {
       return "index";
    }
 
-   @GetMapping("/tags")
+   @GetMapping("/tag")
    public String showTagPage(Model model){
 
       model.addAttribute(new TagForm());
 
       return "tagpage";
+   }
+
+   @GetMapping("/area")
+   public String showAreaPage(Model model){
+
+      model.addAttribute(new AreaForm());
+
+      return "areapage";
+   }
+
+
+   @GetMapping("/event")
+   public String showEventPage(Model model){
+
+      model.addAttribute(new EventForm());
+
+      return "eventpage";
    }
 
    

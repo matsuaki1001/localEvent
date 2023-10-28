@@ -25,13 +25,11 @@ public class UserTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int utid;
 
-    // ユーザー
-    @ManyToOne
-    private User user;
+    // ユーザーID
+    private int uid;
 
-    // タグ
-    @ManyToOne
-    private Tag tag;
+    // タグID
+    private int tid;
 
 
 

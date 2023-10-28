@@ -13,10 +13,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <form method="get" th:action="@{/tag/confirm}"
-                        th:object="${tagForm}">
+                    <form method="get" th:action="@{/area/confirm}"
+                        th:object="${areaForm}">
                         <input class="form-control" pattern="[0-9a-zA-Z_\\-]+"
-                            placeholder="タグID" required th:field="*{tid}"
+                            placeholder="タグID" required th:field="*{aid}"
                             type=text>
                         <input class="form-control"
                             placeholder="タグの名前" required th:field="*{name}"

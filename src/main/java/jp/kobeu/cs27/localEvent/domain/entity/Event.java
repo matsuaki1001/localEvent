@@ -6,7 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * イベントを表すエンティティ
@@ -53,9 +56,8 @@ public class Event {
     // イベントのアクセス
     private String access;
 
-    // イベントのエリア
-    @ManyToOne
-    private Area area;
+    // イベントのエリアID
+    private int aid;
 
     // イベントの主催者
     private String organizer;
@@ -64,6 +66,6 @@ public class Event {
     private int capacity;
 
     //　ユーザのタグとイベントの一致回数
-    private int match;
+    private int count;
 
 }

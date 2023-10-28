@@ -12,10 +12,26 @@
         <h1>Spring Boot Sample</h1>
         <div class="col mb-3">
             <form method="get"
-                th:action="@{/tags}">
+                th:action="@{/tag}">
                 <input class="btn btn-danger "
                     type="submit"
                     value="タグ">
+            </form>
+        </div>
+        <div class="col mb-3">
+            <form method="get"
+                th:action="@{/area}">
+                <input class="btn btn-danger "
+                    type="submit"
+                    value="エリア">
+            </form>
+        </div>
+        <div class="col mb-3">
+            <form method="get"
+                th:action="@{/event}">
+                <input class="btn btn-danger "
+                    type="submit"
+                    value="イベント">
             </form>
         </div>
 
