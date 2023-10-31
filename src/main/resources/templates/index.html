@@ -8,40 +8,69 @@
         <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"
             type="text/javascript"></script>
     </head>
+    <style>
+        
+        /* ページ全体を中央に配置するCSS */
+        html,
+        body {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        /* 正方形のボタンのためのCSS */
+        .square-button {
+            width: 200px;
+            height: 200px;
+            font-size: 1.5rem;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+    
+    </style>
     <body>
-        <h1>Spring Boot Sample</h1>
-        <div class="col mb-3">
-            <form method="get"
-                th:action="@{/tag}">
-                <input class="btn btn-danger "
-                    type="submit"
-                    value="タグ">
-            </form>
-        </div>
-        <div class="col mb-3">
-            <form method="get"
-                th:action="@{/area}">
-                <input class="btn btn-danger "
-                    type="submit"
-                    value="エリア">
-            </form>
-        </div>
-        <div class="col mb-3">
-            <form method="get"
-                th:action="@{/event}">
-                <input class="btn btn-danger "
-                    type="submit"
-                    value="イベント">
-            </form>
-        </div>
+        <div class="container  text-center">
+            <div class="row">
+                <div class="col-6">
 
-        <div class="col mb-3">
-            <form method="get"
-                th:action="@{/user}">
-                <input class="btn btn-danger "
-                    type="submit"
-                    value="ユーザ">
-            </form>
+                    <form method="get"
+                        th:action="@{/tag}">
+                        <input class="btn btn-outline-primary square-button "
+                            type="submit"
+                            value="タグを追加する">
+                    </form>
+
+                    <form method="get"
+                        th:action="@{/area}">
+                        <input class="btn btn-outline-primary square-button "
+                            type="submit"
+                            value="地域を追加する">
+                    </form>
+
+                </div>
+
+                <div class="col-6">
+
+                    <form method="get"
+                        th:action="@{/event}">
+                        <input class="btn btn-outline-primary square-button "
+                            type="submit"
+                            value="イベントを追加する">
+                    </form>
+
+                    <form method="get"
+                        th:action="@{/user}">
+                        <input class="btn btn-outline-primary square-button "
+                            type="submit"
+                            value="ユーザの新規登録">
+                    </form>
+                </div>
+            </div>
         </div>
 
     </body>

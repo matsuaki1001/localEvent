@@ -1,8 +1,12 @@
 package jp.kobeu.cs27.localEvent.application.form;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jp.kobeu.cs27.localEvent.domain.entity.Area;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,16 +31,18 @@ public class EventForm {
     private String description;
 
     // イベントの開始日
-    private String startday;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startday;
 
     // イベントの終了日
-    private String endday;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endday;
 
     // イベントの開催時間の開始
-    private String starttime;
+    private LocalTime starttime;
 
     // イベントの開催時間の終了
-    private String endtime;
+    private LocalTime endtime;
 
     // イベントの会場
     private String place;
@@ -58,6 +64,5 @@ public class EventForm {
 
     // イベントの定員
     private int capacity;
-
 
 }

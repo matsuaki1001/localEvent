@@ -49,10 +49,10 @@ public class EventController {
             return "redirect:/event";
         }
 
-        model.addAttribute("tid", eid);
+        model.addAttribute("eid", eid);
         model.addAttribute("name", form.getName());
         model.addAttribute("description", form.getDescription());
-        model.addAttribute("startday", form.getStarttime());
+        model.addAttribute("startday", form.getStartday());
         model.addAttribute("endday", form.getEndday());
         model.addAttribute("starttime", form.getStarttime());
         model.addAttribute("endtime", form.getEndtime());
@@ -78,7 +78,7 @@ public class EventController {
         // フォームにバリデーション違反があった場合、タグ登録ページに戻る
         if (bindingResult.hasErrors()) {
             attributes.addFlashAttribute("isEventFormError", true);
-
+            System.err.println("あ");
             return "redirect:/event";
         }
 

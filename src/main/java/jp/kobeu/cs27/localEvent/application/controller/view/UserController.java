@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jp.kobeu.cs27.localEvent.application.form.AreaForm;
 import jp.kobeu.cs27.localEvent.application.form.UserForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
-import jp.kobeu.cs27.localEvent.domain.service.AreaService;
 import jp.kobeu.cs27.localEvent.domain.service.UserService;
 import lombok.AllArgsConstructor;
 
@@ -22,8 +20,8 @@ public class UserController {
     private final UserService userService;
 
     /**
-     * タグ登録が可能か確認する
-     * タグが登録済みであった場合、タグ登録ページに戻る
+     * ユーザ登録が可能か確認する
+     * ユーザが登録済みであった場合、ユーザ登録ページに戻る
      * 
      * 
      */
@@ -59,7 +57,7 @@ public class UserController {
     }
 
     /**
-     * タグを登録する
+     * ユーザを登録する
      */
     @PostMapping("/user/register")
     public String registerArea(Model model, RedirectAttributes attributes, @ModelAttribute @Validated UserForm form,
@@ -83,4 +81,5 @@ public class UserController {
         return "redirect:/";
 
     }
+
 }

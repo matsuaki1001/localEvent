@@ -9,31 +9,48 @@
             type="text/javascript"></script>
     </head>
     <body>
-        <h1>Tag page Sample</h1>
+        <h1>ユーザ登録確認</h1>
+        <table class="table text-dark text-center mb-3 ">
+            <tbody>
+                <tr>
+                    <th scope="row">名前</th>
+                    <td>[[${name}]]</td>
+                </tr>
+                <tr>
+                    <th scope="row">説明</th>
+                    <td>[[${description}]]</td>
+                </tr>
+                <tr>
+                    <th scope="row">メールアドレス</th>
+                    <td>[[${email}]]</td>
+                </tr>
+                <tr>
+                    <th scope="row">パスワード</th>
+                    <td>[[${password}]]</td>
+                </tr>
+                <tr>
+                    <th scope="row">エリアID</th>
+                    <td>[[${aid}]]</td>
+                </tr>
+            </tbody>
+        </table>
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <form method="post" th:action="@{/user/register}"
-                        th:object="${userForm}">
-                        <input class="form-control" pattern="[0-9a-zA-Z_\\-]+"
-                            placeholder="ユーザID" required th:field="*{uid}"
-                            type=text>
-                        <input class="form-control"
-                            placeholder="ユーザの名前" required th:field="*{name}"
-                            type=text>
-                        <input class="form-control"
-                            placeholder="メールアドレス" required
-                            th:field="*{email}" type=text>
-                        <input class="form-control"
-                            placeholder="パスワード" required
-                            th:field="*{password}" type=text>
-                        <input class="form-control"
-                            placeholder="地域ID" required
-                            th:field="*{aid}" type=text>
+                    <form method="post" th:action="@{/user/register}">
+                        <input type="hidden" name="uid" th:value="${uid}">
+                        <input type="hidden" name="name" th:value="${name}">
+                        <input type="hidden" name="description"
+                            th:value="${description}">
+                        <input type="hidden" name="email" th:value="${email}">
+                        <input type="hidden" name="password"
+                            th:value="${password}">
+                        <input type="hidden" name="aid" th:value="${aid}">
                         <input class="btn btn-primary" type="submit" value="登録">
                     </form>
-
                 </div>
+            </div>
+        </div>
 
-            </body>
-        </html>
+    </body>
+</html>

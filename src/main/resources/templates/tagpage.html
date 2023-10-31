@@ -9,20 +9,17 @@
             type="text/javascript"></script>
     </head>
     <body>
-        <h1>Tag page Sample</h1>
-        <div class="container">
+        <div class="container　text-center">
             <div class="row">
                 <div class="col-12">
+                    <h1>タグを追加する</h1>
                     <form method="get" th:action="@{/tag/confirm}"
                         th:object="${tagForm}">
-                        <input class="form-control" pattern="[0-9a-zA-Z_\\-]+"
-                            placeholder="タグID" required th:field="*{tid}"
+                        <input class="form-control"
+                            placeholder="タグの名前"  th:field="*{name}"
                             type=text>
                         <input class="form-control"
-                            placeholder="タグの名前" required th:field="*{name}"
-                            type=text>
-                        <input class="form-control"
-                            placeholder="タグの説明" required
+                            placeholder="タグの説明" 
                             th:field="*{description}" type=text>
                         <input class="btn btn-primary" type="submit" value="登録">
                     </form>

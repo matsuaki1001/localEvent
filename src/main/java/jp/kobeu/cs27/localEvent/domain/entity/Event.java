@@ -1,5 +1,9 @@
 package jp.kobeu.cs27.localEvent.domain.entity;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,16 +37,16 @@ public class Event {
     private String description;
 
     // イベントの開始日
-    private String startday;
+    private LocalDate startday;
 
     // イベントの終了日
-    private String endday;
+    private LocalDate endday;
 
     // イベントの開催時間の開始
-    private String starttime;
+    private LocalTime starttime;
 
     // イベントの開催時間の終了
-    private String endtime;
+    private LocalTime endtime;
 
     // イベントの会場
     private String place;
@@ -65,7 +69,7 @@ public class Event {
     // イベントの定員
     private int capacity;
 
-    //　ユーザのタグとイベントの一致回数
+    // ユーザのタグとイベントの一致回数
     private int count;
 
 }

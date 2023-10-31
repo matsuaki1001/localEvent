@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8" />
-        <title>Tag Sample</title>
+        <title>Area Sample</title>
         <link rel="stylesheet"
             th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
         <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"
@@ -16,13 +16,13 @@
                     <form method="get" th:action="@{/area/confirm}"
                         th:object="${areaForm}">
                         <input class="form-control" pattern="[0-9a-zA-Z_\\-]+"
-                            placeholder="タグID" required th:field="*{aid}"
+                            placeholder="エリアID" required th:field="*{aid}"
                             type=text>
                         <input class="form-control"
-                            placeholder="タグの名前" required th:field="*{name}"
+                            placeholder="エリアの名前" required th:field="*{name}"
                             type=text>
                         <input class="form-control"
-                            placeholder="タグの説明" required
+                            placeholder="エリアの説明" required
                             th:field="*{description}" type=text>
                         <input class="btn btn-primary" type="submit" value="登録">
                     </form>
