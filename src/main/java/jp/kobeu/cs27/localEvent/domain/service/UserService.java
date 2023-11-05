@@ -10,6 +10,7 @@ import javax.swing.text.html.HTML.Tag;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jp.kobeu.cs27.localEvent.application.form.UserForm;
+import jp.kobeu.cs27.localEvent.application.form.UserTagForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.entity.User;
 import jp.kobeu.cs27.localEvent.domain.entity.UserTag;
@@ -129,14 +130,19 @@ public class UserService {
      * 
      * @return ユーザの一覧
      */
-    public List<User> getevents() {
+    public List<User> getusers() {
         return users.findAllByOrderByUidAsc();
     }
 
     /**
      * ユーザとタグを紐付ける
      */
-    public void addTagToUser(int uid, int tid) {
+    public void addTagToUser(UserTagForm form) {
+
+        // ユーザIDを変数に格納する
+        final int uid = form.getUid();
+        // タグIDを変数に格納する
+        final int tid = form.getTid();
 
         // ユーザが存在しない場合は例外を投げる
         if (!users.existsByUid(uid)) {
@@ -155,7 +161,52 @@ public class UserService {
         }
 
         // ユーザとタグを紐付ける
-       userTags.save(new UserTag(0, uid, tid));
+        userTags.save(new UserTag(0, uid, tid));
+    }
+
+    /**
+     * ユーザとタグの紐付けを削除する
+     */
+    public void deleteUserTag(int utid) {
+
+        int uid = userTags.findByUtid(utid).getUid();
+        int tid = userTags.findByUtid(utid).getTid();
+
+        // ユーザが存在しない場合は例外を投げる
+        if (!users.existsByUid(uid)) {
+            throw new ValidationException(
+                    USER_DOES_NOT_EXIST,
+                    "get the User",
+                    String.format("User id %d not found", uid));
+        }
+
+        // タグが存在しない場合は例外を投げる
+        if (!tags.existsByTid(tid)) {
+            throw new ValidationException(
+                    USER_DOES_NOT_EXIST,
+                    "get the tag",
+                    String.format("Tag id %d not found", tid));
+        }
+
+        // ユーザとタグの紐付けを削除する
+        userTags.deleteByUtid(utid);
+    }
+
+    /**
+     * ユーザIDからユーザタグの一覧を取得する
+     */
+    public List<UserTag> getUserTagsByUid(int uid) {
+
+        // ユーザが存在しない場合は例外を投げる
+        if (!users.existsByUid(uid)) {
+            throw new ValidationException(
+                    USER_DOES_NOT_EXIST,
+                    "get the User",
+                    String.format("User id %d not found", uid));
+        }
+
+        // ユーザタグの一覧を取得する
+        return userTags.findAllByOrderByUtidAsc();
     }
 
 }

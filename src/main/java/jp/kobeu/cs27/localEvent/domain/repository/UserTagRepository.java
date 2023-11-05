@@ -19,4 +19,14 @@ public interface UserTagRepository extends JpaRepository<UserTag, Integer> {
      * 
      */
     List<UserTag> findAllByOrderByUtidAsc();
+
+    /**
+     * ユーザタグIDが一致するユーザタグを取得する
+     */
+    UserTag findByUtid(int utid);
+
+    /**
+     * ユーザタグIDが一致するユーザタグを削除する
+     */
+    void deleteByUtid(int utid);
 }

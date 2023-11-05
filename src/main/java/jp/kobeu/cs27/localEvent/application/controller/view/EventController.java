@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
+import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
 import jp.kobeu.cs27.localEvent.application.form.TagForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.service.EventService;
@@ -69,7 +70,7 @@ public class EventController {
     }
 
     /**
-     * タグを登録する
+     * イベントを登録する
      */
     @PostMapping("/event/register")
     public String registerTag(Model model, RedirectAttributes attributes, @ModelAttribute @Validated EventForm form,
@@ -78,7 +79,6 @@ public class EventController {
         // フォームにバリデーション違反があった場合、タグ登録ページに戻る
         if (bindingResult.hasErrors()) {
             attributes.addFlashAttribute("isEventFormError", true);
-            System.err.println("あ");
             return "redirect:/event";
         }
 
@@ -88,6 +88,31 @@ public class EventController {
         } catch (ValidationException e) {
             attributes.addFlashAttribute("isEventAlreadyExistsError", true);
             return "redirect:/event";
+        }
+
+        return "redirect:/";
+
+    }
+
+    /**
+     * イベントとタグを紐付ける
+     */
+    @PostMapping("/event/tag")
+    public String connectEventTag(Model model, RedirectAttributes attributes, @ModelAttribute @Validated EventTagForm form,
+            BindingResult bindingResult) {
+
+        // フォームにバリデーション違反があった場合、タグ登録ページに戻る
+        if (bindingResult.hasErrors()) {
+            attributes.addFlashAttribute("isTagFormError", true);
+            return "redirect:/tag";
+        }
+
+        // タグとイベントを紐付ける
+        try {
+            eventService.addTagToEvent(form);
+        } catch (ValidationException e) {
+            attributes.addFlashAttribute("isTagAlreadyExistsError", true);
+            return "redirect:/tag";
         }
 
         return "redirect:/";

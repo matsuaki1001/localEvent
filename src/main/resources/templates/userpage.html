@@ -24,9 +24,14 @@
                         <input class="form-control"
                             placeholder="パスワード" required
                             th:field="*{password}" type=text>
-                        <input class="form-control"
-                            placeholder="地域ID" required
-                            th:field="*{aid}" type=text>
+                        <select class="form-control"
+                            th:name="aid"
+                            th:id="aid">
+                            <option th:each="area : ${areaList}"
+                                th:value="${area.aid}"
+                                th:field="*{aid}"
+                                th:text="${area.name}"></option>
+                        </select>
                         <input class="btn btn-primary" type="submit" value="登録">
                     </form>
 

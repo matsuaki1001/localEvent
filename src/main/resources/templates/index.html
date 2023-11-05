@@ -36,7 +36,7 @@
     <body>
         <div class="container  text-center">
             <div class="row">
-                <div class="col-6">
+                <div class="col-4">
 
                     <form method="get"
                         th:action="@{/tag}">
@@ -54,7 +54,7 @@
 
                 </div>
 
-                <div class="col-6">
+                <div class="col-4">
 
                     <form method="get"
                         th:action="@{/event}">
@@ -69,6 +69,31 @@
                             type="submit"
                             value="ユーザの新規登録">
                     </form>
+                </div>
+
+                <div class="col-4">
+                        
+                        <form method="get"
+                            th:action="@{/eventlist}">
+                            <input class="btn btn-outline-primary square-button "
+                                type="get"
+                                value="イベント一覧">
+                        </form>
+    
+                        <form method="get"
+                            th:action="@{/userlist}">
+                            <input class="btn btn-outline-primary square-button "
+                                type="get"
+                                value="ユーザ一覧">
+                        </form>
+                        <form method="get"
+                            th:action="@{/service}">
+                            <input class="btn btn-outline-primary square-button "
+                                type="submit"
+                                value="サービス">
+                        </form>
+                        
+
                 </div>
             </div>
         </div>

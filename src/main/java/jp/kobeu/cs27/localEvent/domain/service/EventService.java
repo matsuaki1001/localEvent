@@ -3,6 +3,7 @@ package jp.kobeu.cs27.localEvent.domain.service;
 import org.springframework.stereotype.Service;
 
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
+import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
 import jp.kobeu.cs27.localEvent.domain.entity.Event;
 import jp.kobeu.cs27.localEvent.domain.entity.EventTag;
 import jp.kobeu.cs27.localEvent.domain.repository.EventRepository;
@@ -139,26 +140,85 @@ public class EventService {
      * タグとイベントを紐付ける
      */
 
-     public void addTagToEvent(int tid, int eid) {
-         // イベントが存在しない場合は例外を投げる
-         if (!events.existsByEid(eid)) {
-             throw new ValidationException(
-                     EVENT_DOES_NOT_EXIST,
-                     "get the event",
-                     String.format("Event id %d not found", eid));
-         }
- 
-         // タグが存在しない場合は例外を投げる
-         if (!tags.existsByTid(tid)) {
-             throw new ValidationException(
-                     TAG_DOES_NOT_EXIST,
-                     "get the tag",
-                     String.format("Tag id %d not found", tid));
-         }
- 
-         // イベントにタグを紐付ける
-         eventTags.save(new EventTag(0,tid, eid));
-     }
+    public void addTagToEvent(EventTagForm form) {
 
+        // イベントIDを変数に格納する
+        final int eid = form.getEid();
+        final int tid = form.getTid();
+        
+        // イベントが存在しない場合は例外を投げる
+        if (!events.existsByEid(eid)) {
+            throw new ValidationException(
+                    EVENT_DOES_NOT_EXIST,
+                    "get the event",
+                    String.format("Event id %d not found", eid));
+        }
 
+        // タグが存在しない場合は例外を投げる
+        if (!tags.existsByTid(tid)) {
+            throw new ValidationException(
+                    TAG_DOES_NOT_EXIST,
+                    "get the tag",
+                    String.format("Tag id %d not found", tid));
+        }
+
+        // イベントにタグを紐付ける
+        eventTags.save(new EventTag(0, tid, eid));
+    }
+
+    /**
+     * タグとイベントの紐付けを削除する
+     */
+    public void deleteTagFromEvent(int etid) {
+
+        int eid = eventTags.findByEtid(etid).getEid();
+        int tid = eventTags.findByEtid(etid).getTid();
+        // イベントが存在しない場合は例外を投げる
+        if (!events.existsByEid(eid)) {
+            throw new ValidationException(
+                    EVENT_DOES_NOT_EXIST,
+                    "get the event",
+                    String.format("Event id %d not found", eid));
+        }
+
+        // タグが存在しない場合は例外を投げる
+        if (!tags.existsByTid(tid)) {
+            throw new ValidationException(
+                    TAG_DOES_NOT_EXIST,
+                    "get the tag",
+                    String.format("Tag id %d not found", tid));
+        }
+
+        // イベントにタグを紐付ける
+        eventTags.deleteByEtid(etid);
+    }
+
+    /**
+     * タグIDに対応するイベントの一覧を取得する
+     */
+    public List<Event> getEventsByTag(int tid) {
+        // タグが存在しない場合は例外を投げる
+        if (!tags.existsByTid(tid)) {
+            throw new ValidationException(
+                    TAG_DOES_NOT_EXIST,
+                    "get the tag",
+                    String.format("Tag id %d not found", tid));
+        }
+        // タグIDに対応するイベントタグの一覧を取得する
+        List<EventTag> eventTagList = eventTags.findAllByTid(tid);
+        // イベントタグの一覧からイベントIDの一覧を取得する
+        List<Integer> eidList = eventTagList.stream().map(eventTag -> eventTag.getEid()).toList();
+        // イベントIDの一覧からイベントの一覧を取得する
+        List<Event> eventList = events.findAllById(eidList);
+
+        return eventList;
+    }
+
+    /**
+     * イベントリストの中から現在から一週間以内に開催されるイベントを取得する
+     */
+    public List<Event> getEventsWithinAWeek(List<Event> eventList) {
+        return eventList.stream().filter(event -> event.getStartday().isBefore(event.getStartday().plusDays(7)))
+                .toList();
+    }
 }

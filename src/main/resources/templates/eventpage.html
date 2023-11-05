@@ -47,9 +47,14 @@
                         </div> <input class="form-control"
                             placeholder="イベントのアクセス"
                             th:field="*{access}" type=text>
-                        <input class="form-control"
-                            placeholder="エリアID"
-                            th:field="*{aid}" type=text>
+                        <select class="form-control"
+                            th:name="aid"
+                            th:id="aid">
+                            <option th:each="area : ${areaList}"
+                                th:value="${area.aid}"
+                                th:field="*{aid}"
+                                th:text="${area.name}"></option>
+                        </select>
                         <input class="form-control"
                             placeholder="イベントの主催者"
                             th:field="*{organizer}" type=text>
@@ -65,3 +70,4 @@
             </div>
         </div>
     </body>
+</html>

@@ -9,20 +9,17 @@
             type="text/javascript"></script>
     </head>
     <body>
-        <h1>Tag page Sample</h1>
+        <h1>Area page Sample</h1>
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <form method="get" th:action="@{/area/confirm}"
                         th:object="${areaForm}">
-                        <input class="form-control" pattern="[0-9a-zA-Z_\\-]+"
-                            placeholder="エリアID" required th:field="*{aid}"
+                        <input class="form-control"
+                            placeholder="エリアの名前" th:field="*{name}"
                             type=text>
                         <input class="form-control"
-                            placeholder="エリアの名前" required th:field="*{name}"
-                            type=text>
-                        <input class="form-control"
-                            placeholder="エリアの説明" required
+                            placeholder="エリアの説明"
                             th:field="*{description}" type=text>
                         <input class="btn btn-primary" type="submit" value="登録">
                     </form>

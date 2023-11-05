@@ -25,7 +25,21 @@ public interface EventTagRepository extends JpaRepository<EventTag, Integer> {
      * 
      * @param tid タグID
      */
-     void deleteByEtid(int etid);
+    void deleteByEtid(int etid);
+
+    /**
+     * イベントタグIDに対応するイベントタグを入手する
+     * 
+     * @param etid イベントタグID
+     */
+    EventTag findByEtid(int etid);
+
+    /**
+     * タグIDに対応するイベントタグを入手する
+     * @param tid タグID
+     */
+    List<EventTag> findAllByTid(int tid);
+
 
 
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.kobeu.cs27.localEvent.application.form.UserForm;
+import jp.kobeu.cs27.localEvent.application.form.UserTagForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.service.UserService;
 import lombok.AllArgsConstructor;
@@ -73,6 +74,32 @@ public class UserController {
         // タグを登録する
         try {
             userService.addUser(form);
+        } catch (ValidationException e) {
+            attributes.addFlashAttribute("isUserAlreadyExistsError", true);
+            return "redirect:/user";
+        }
+
+        return "redirect:/";
+
+    }
+
+    /**
+     * ユーザとタグを紐付ける
+     */
+    @PostMapping("/user/register")
+    public String connectUserTag(Model model, RedirectAttributes attributes, @ModelAttribute @Validated UserTagForm form,
+            BindingResult bindingResult) {
+
+        // フォームにバリデーション違反があった場合、タグ登録ページに戻る
+        if (bindingResult.hasErrors()) {
+            attributes.addFlashAttribute("isUserFormError", true);
+
+            return "redirect:/user";
+        }
+
+        // タグを登録する
+        try {
+            userService.addTagToUser(form);
         } catch (ValidationException e) {
             attributes.addFlashAttribute("isUserAlreadyExistsError", true);
             return "redirect:/user";
