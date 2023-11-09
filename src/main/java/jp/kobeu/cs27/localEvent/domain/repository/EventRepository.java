@@ -1,4 +1,5 @@
 package jp.kobeu.cs27.localEvent.domain.repository;
+
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,10 +22,11 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
      * 
      * 
      */
-    List <Event> findAllByOrderByEidAsc();
+    List<Event> findAllByOrderByEidAsc();
 
     /**
      * イベントIDが一致するイベントを削除する
+     * 
      * @param eid イベントID
      */
     void deleteByEid(int eid);
@@ -37,11 +39,9 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
      */
     boolean existsByEid(int eid);
 
-    
+    /**
+     * イベントIDのリストに対応するイベントのリストを入手する
+     */
+    List<Event> findAllByEidIn(List<Integer> eidList);
 
-
-
-
-
-    
 }

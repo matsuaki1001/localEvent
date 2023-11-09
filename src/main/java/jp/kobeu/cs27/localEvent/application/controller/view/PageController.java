@@ -13,13 +13,17 @@ import jp.kobeu.cs27.localEvent.application.form.AreaForm;
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
 import jp.kobeu.cs27.localEvent.application.form.TagForm;
+import jp.kobeu.cs27.localEvent.application.form.UidForm;
 import jp.kobeu.cs27.localEvent.application.form.UserForm;
 import jp.kobeu.cs27.localEvent.application.form.UserTagForm;
 import jp.kobeu.cs27.localEvent.domain.entity.Area;
 import jp.kobeu.cs27.localEvent.domain.entity.Event;
+import jp.kobeu.cs27.localEvent.domain.entity.Tag;
 import jp.kobeu.cs27.localEvent.domain.entity.User;
+import jp.kobeu.cs27.localEvent.domain.entity.UserTag;
 import jp.kobeu.cs27.localEvent.domain.service.AreaService;
 import jp.kobeu.cs27.localEvent.domain.service.EventService;
+import jp.kobeu.cs27.localEvent.domain.service.TagService;
 import jp.kobeu.cs27.localEvent.domain.service.UserService;
 import jp.kobeu.cs27.localEvent.application.form.TagForm;
 import lombok.AllArgsConstructor;
@@ -35,6 +39,7 @@ public class PageController {
    private final AreaService areaService;
    private final UserService userService;
    private final EventService eventService;
+   private final TagService tagService;
 
    @GetMapping("/")
    public String loginPage() {
@@ -83,16 +88,10 @@ public class PageController {
          @ModelAttribute @Validated UserTagForm form,
          BindingResult bindingResult) {
 
-      if (bindingResult.hasErrors()) {
-         attributes.addFlashAttribute("isUserTagFormError", true);
-         return "redirect:/userlist";
-      }
-
       List<User> userList = userService.getusers();
+      List<Tag> tagList = tagService.getTags();
+      model.addAttribute("tagList", tagList);
       model.addAttribute("userList", userList);
-      model.addAttribute("utid", form.getUtid());
-      model.addAttribute("uid", form.getUid());
-      model.addAttribute("tid", form.getTid());
 
       return "userlistpage";
    }
@@ -102,18 +101,53 @@ public class PageController {
          @ModelAttribute @Validated EventTagForm form,
          BindingResult bindingResult) {
 
-      if (bindingResult.hasErrors()) {
-         attributes.addFlashAttribute("isEventTagFormError", true);
-         return "redirect:/eventlist";
-      }
-
       List<Event> eventList = eventService.getevents();
+      List<Tag> tagList = tagService.getTags();
+      model.addAttribute("tagList", tagList);
       model.addAttribute("eventList", eventList);
-      model.addAttribute("etid", form.getEtid());
-      model.addAttribute("eid", form.getEid());
-      model.addAttribute("tid", form.getTid());
 
       return "eventlistpage";
+   }
+
+   @GetMapping("/login")
+   public String showLoginPage(Model model) {
+
+      model.addAttribute(new UidForm());
+      List<User> userList = userService.getusers();
+      model.addAttribute("userList", userList);
+
+      return "login";
+   }
+
+   @GetMapping("/service")
+   public String showServicePage(Model model, RedirectAttributes attributes,
+         @ModelAttribute @Validated UidForm form,
+         BindingResult bindingResult) {
+
+      // フォームにバリデーション違反があった場合、タグ登録ページに戻る
+      if (bindingResult.hasErrors()) {
+         attributes.addFlashAttribute("isEventFormError", true);
+
+         return "redirect:/login";
+      }
+
+      // ユーザIDを変数に格納する
+      final int uid = form.getUid();
+
+      // ユーザが存在するか確認する
+      if (!userService.existsUser(uid)) {
+         attributes.addFlashAttribute("isUserAlreadyExistsError", true);
+
+         return "redirect:/login";
+      }
+
+      List<UserTag> userTagList = userService.getUserTagsByUid(uid);
+      List<Integer> tidList = userService.getTidsByUserTags(userTagList);
+      List<Event> eventList = eventService.getEventsByTagIdList(tidList);
+
+      model.addAttribute("eventList", eventList);
+
+      return "service";
    }
 
 }

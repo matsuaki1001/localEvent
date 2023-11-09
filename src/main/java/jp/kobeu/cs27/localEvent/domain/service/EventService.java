@@ -145,7 +145,7 @@ public class EventService {
         // イベントIDを変数に格納する
         final int eid = form.getEid();
         final int tid = form.getTid();
-        
+
         // イベントが存在しない場合は例外を投げる
         if (!events.existsByEid(eid)) {
             throw new ValidationException(
@@ -163,7 +163,7 @@ public class EventService {
         }
 
         // イベントにタグを紐付ける
-        eventTags.save(new EventTag(0, tid, eid));
+        eventTags.save(new EventTag(0, eid, tid));
     }
 
     /**
@@ -194,24 +194,26 @@ public class EventService {
     }
 
     /**
-     * タグIDに対応するイベントの一覧を取得する
+     * イベントタグのリストからイベントIDのリストを入手する
+     * 
+     * @param eventTagList
+     * @return
      */
-    public List<Event> getEventsByTag(int tid) {
-        // タグが存在しない場合は例外を投げる
-        if (!tags.existsByTid(tid)) {
-            throw new ValidationException(
-                    TAG_DOES_NOT_EXIST,
-                    "get the tag",
-                    String.format("Tag id %d not found", tid));
-        }
-        // タグIDに対応するイベントタグの一覧を取得する
-        List<EventTag> eventTagList = eventTags.findAllByTid(tid);
-        // イベントタグの一覧からイベントIDの一覧を取得する
-        List<Integer> eidList = eventTagList.stream().map(eventTag -> eventTag.getEid()).toList();
-        // イベントIDの一覧からイベントの一覧を取得する
-        List<Event> eventList = events.findAllById(eidList);
+    public List<Integer> getEventIdListByEventTagList(List<EventTag> eventTagList) {
+        return eventTagList.stream().map(eventTag -> eventTag.getEid()).toList();
+    }
 
-        return eventList;
+    /**
+     * タグIDのリストに対応するイベントのリストを入手する
+     * 
+     * @param eventList
+     * @return
+     */
+    public List<Event> getEventsByTagIdList(List<Integer> tidList) {
+        List<EventTag> eventTagList = eventTags.findAllByTidIn(tidList);
+        List<Integer> eidList = getEventIdListByEventTagList(eventTagList);
+        return events.findAllByEidIn(eidList);
+
     }
 
     /**

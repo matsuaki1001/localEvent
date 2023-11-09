@@ -86,7 +86,7 @@ public class UserController {
     /**
      * ユーザとタグを紐付ける
      */
-    @PostMapping("/user/register")
+    @PostMapping("/user/tag")
     public String connectUserTag(Model model, RedirectAttributes attributes, @ModelAttribute @Validated UserTagForm form,
             BindingResult bindingResult) {
 

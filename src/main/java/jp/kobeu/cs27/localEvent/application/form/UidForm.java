@@ -17,7 +17,6 @@ import lombok.Setter;
 public class UidForm {
     
     //ユーザID
-    @Pattern(regexp = "[0-9a-zA-Z_\\-]+")
     @NotNull
-    private String uid;
+    private int uid;
 }

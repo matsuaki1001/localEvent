@@ -206,7 +206,14 @@ public class UserService {
         }
 
         // ユーザタグの一覧を取得する
-        return userTags.findAllByOrderByUtidAsc();
+        return userTags.findAllByUid(uid);
+    }
+
+    /**
+     * ユーザタグのリストからタグIDのリストを取得する
+     */
+    public List<Integer> getTidsByUserTags(List<UserTag> userTags) {
+        return userTags.stream().map(UserTag::getTid).toList();
     }
 
 }
