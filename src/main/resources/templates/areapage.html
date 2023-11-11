@@ -2,25 +2,27 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8" />
-        <title>Area Sample</title>
+        <title>エリア追加</title>
         <link rel="stylesheet"
             th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
         <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"
             type="text/javascript"></script>
     </head>
     <body>
-        <h1>Area page Sample</h1>
         <div class="container">
             <div class="row">
                 <div class="col-12">
+                    <h1>地域を追加する</h1>
                     <form method="get" th:action="@{/area/confirm}"
                         th:object="${areaForm}">
+                        <label for="name" class="form-label">エリアの名前</label>
                         <input class="form-control"
                             placeholder="エリアの名前" th:field="*{name}"
-                            type=text>
+                            type=text id="name">
+                        <label for="description" class="form-label">エリアの説明</label>
                         <input class="form-control"
                             placeholder="エリアの説明"
-                            th:field="*{description}" type=text>
+                            th:field="*{description}" type=text id="description">
                         <input class="btn btn-primary" type="submit" value="登録">
                     </form>
 

@@ -12,6 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jp.kobeu.cs27.localEvent.application.form.UserForm;
 import jp.kobeu.cs27.localEvent.application.form.UserTagForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
+import jp.kobeu.cs27.localEvent.domain.entity.Area;
+import jp.kobeu.cs27.localEvent.domain.service.AreaService;
 import jp.kobeu.cs27.localEvent.domain.service.UserService;
 import lombok.AllArgsConstructor;
 
@@ -19,6 +21,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final AreaService areaService;
 
     /**
      * ユーザ登録が可能か確認する
@@ -52,6 +55,17 @@ public class UserController {
         model.addAttribute("email", form.getEmail());
         model.addAttribute("password", form.getPassword());
         model.addAttribute("aid", form.getAid());
+
+        int aid = form.getAid();
+
+        Area area;
+        try {
+            area = areaService.getArea(aid);
+            model.addAttribute("areaName", area.getName());
+        } catch (ValidationException e) {
+            attributes.addFlashAttribute("isAreaNotFoundError", true);
+            return "redirect:/user";
+        }
 
         return "userconfirm";
 
@@ -87,7 +101,8 @@ public class UserController {
      * ユーザとタグを紐付ける
      */
     @PostMapping("/user/tag")
-    public String connectUserTag(Model model, RedirectAttributes attributes, @ModelAttribute @Validated UserTagForm form,
+    public String connectUserTag(Model model, RedirectAttributes attributes,
+            @ModelAttribute @Validated UserTagForm form,
             BindingResult bindingResult) {
 
         // フォームにバリデーション違反があった場合、タグ登録ページに戻る

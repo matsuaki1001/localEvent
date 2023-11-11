@@ -1,5 +1,6 @@
 package jp.kobeu.cs27.localEvent.application.form;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class UserForm {
     private int uid;
 
     //ユーザー名
+    @NotBlank
     private String name;
 
     //メールアドレス

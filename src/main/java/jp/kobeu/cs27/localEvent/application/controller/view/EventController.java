@@ -13,6 +13,8 @@ import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
 import jp.kobeu.cs27.localEvent.application.form.TagForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
+import jp.kobeu.cs27.localEvent.domain.entity.Area;
+import jp.kobeu.cs27.localEvent.domain.service.AreaService;
 import jp.kobeu.cs27.localEvent.domain.service.EventService;
 import jp.kobeu.cs27.localEvent.domain.service.TagService;
 import lombok.AllArgsConstructor;
@@ -22,6 +24,7 @@ import lombok.AllArgsConstructor;
 public class EventController {
 
     private final EventService eventService;
+    private final AreaService areaService;
 
     /**
      * タグ登録が可能か確認する
@@ -65,6 +68,15 @@ public class EventController {
         model.addAttribute("organizer", form.getOrganizer());
         model.addAttribute("capacity", form.getCapacity());
 
+        final int aid = form.getAid();
+        try {
+            Area area = areaService.getArea(aid);
+            model.addAttribute("areaName", area.getName());
+        } catch (ValidationException e) {
+            attributes.addFlashAttribute("isAreaNotFoundError", true);
+            return "redirect:/event";
+        }
+
         return "eventconfirm";
 
     }
@@ -98,7 +110,8 @@ public class EventController {
      * イベントとタグを紐付ける
      */
     @PostMapping("/event/tag")
-    public String connectEventTag(Model model, RedirectAttributes attributes, @ModelAttribute @Validated EventTagForm form,
+    public String connectEventTag(Model model, RedirectAttributes attributes,
+            @ModelAttribute @Validated EventTagForm form,
             BindingResult bindingResult) {
 
         // フォームにバリデーション違反があった場合、タグ登録ページに戻る

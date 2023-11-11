@@ -51,16 +51,22 @@
                                 <td>[[${fee}]]</td>
                             </tr>
                             <tr>
-                                <th scope="row">駐車場があるかどうか</th>
-                                <td>[[${parking}]]</td>
+                                <th:block th:if="${parking} == true">
+                                    <th scope="row">駐車場があるかどうか</th>
+                                    <td>あり</td>
+                                </th:block>
+                                <th:block th:if="${parking} == false">
+                                    <th scope="row">駐車場があるかどうか</th>
+                                    <td>なし</td>
+                                </th:block>
                             </tr>
                             <tr>
                                 <th scope="row">イベントのアクセス</th>
                                 <td>[[${access}]]</td>
                             </tr>
                             <tr>
-                                <th scope="row">エリアID</th>
-                                <td>[[${aid}]]</td>
+                                <th scope="row">エリア</th>
+                                <td>[[${areaName}]]</td>
                             </tr>
                             <tr>
                                 <th scope="row">イベントの主催者</th>
