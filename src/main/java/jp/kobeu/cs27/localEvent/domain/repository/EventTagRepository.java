@@ -42,6 +42,13 @@ public interface EventTagRepository extends JpaRepository<EventTag, Integer> {
     List<EventTag> findAllByTid(int tid);
 
     /**
+     * イベントIDに対応するイベントタグを入手する
+     * @param eid イベントID
+     * @return イベントタグのリスト
+     */
+    List<EventTag> findAllByEid(int eid);
+
+    /**
      * タグIDのリストに対応するイベントタグのリストを入手する
      * 
      * @param tidList タグIDのリスト

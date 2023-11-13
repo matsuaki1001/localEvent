@@ -50,7 +50,7 @@ public class AreaController {
         model.addAttribute("name", form.getName());
         model.addAttribute("description", form.getDescription());
 
-        return "areaconfirm";
+        return "areainputconfirm";
 
     }
 

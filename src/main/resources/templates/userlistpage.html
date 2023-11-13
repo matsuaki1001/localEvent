@@ -12,28 +12,51 @@
     <body>
         <div class="container">
             <div class="row">
-                <form method="post" th:action="@{/user/tag}"
-                    th:object="${userTagForm}">
-                    <select class="form-control"
-                        th:name="uid"
-                        th:id="uid">
-                        <option th:each="user : ${userList}"
-                            th:value="${user.uid}"
-                            th:field="*{uid}"
-                            th:text="${user.name}"></option>
-                    </select>
-                    <select class="form-control"
-                        th:name="tid"
-                        th:id="tid">
-                        <option th:each="tag : ${tagList}"
-                            th:value="${tag.tid}"
-                            th:field="*{tid}"
-                            th:text="${tag.name}"></option>
-                    </select>
-                    <input class="btn btn-outline-primary square-button "
-                        type="submit"
-                        value="タグを追加する">
-                </form>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ユーザーID</th>
+                            <th>ユーザー名</th>
+                            <th>タグ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="user : ${userList}">
+                            <td th:text="${user.uid}"></td>
+                            <td th:text="${user.name}"></td>
+                            <td>
+                                <ul>
+                                    <li
+                                        th:each="tag : ${userService.getTagsByUid(user.uid)}"
+                                        th:text="'#' + ${tag.name}"></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <form method="post" th:action="@{/user/tag}"
+                        th:object="${userTagForm}">
+                        <select class="form-control"
+                            th:name="uid"
+                            th:id="uid">
+                            <option th:each="user : ${userList}"
+                                th:value="${user.uid}"
+                                th:field="*{uid}"
+                                th:text="${user.name}"></option>
+                        </select>
+                        <select class="form-control"
+                            th:name="tid"
+                            th:id="tid">
+                            <option th:each="tag : ${tagList}"
+                                th:value="${tag.tid}"
+                                th:field="*{tid}"
+                                th:text="${tag.name}"></option>
+                        </select>
+                        <input class="btn btn-outline-primary square-button "
+                            type="submit"
+                            value="タグを追加する">
+                    </form>
+                </div>
             </div>
-        </div>
-    </body>
+        </body>

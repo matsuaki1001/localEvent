@@ -12,28 +12,50 @@
     <body>
         <div class="container">
             <div class="row">
-                <form method="post" th:action="@{/event/tag}"
-                    th:object="${eventTagForm}">
-                    <select class="form-control"
-                        th:name="eid"
-                        th:id="eid">
-                        <option th:each="event : ${eventList}"
-                            th:value="${event.eid}"
-                            th:field="*{eid}"
-                            th:text="${event.name}"></option>
-                    </select>
-                    <select class="form-control"
-                        th:name="tid"
-                        th:id="tid">
-                        <option th:each="tag : ${tagList}"
-                            th:value="${tag.tid}"
-                            th:field="*{tid}"
-                            th:text="${tag.name}"></option>
-                    </select>
-                    <input class="btn btn-outline-primary square-button "
-                        type="submit"
-                        value="タグを追加する">
-                </form>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>イベントID</th>
+                            <th>イベント名</th>
+                            <th>タグ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="event : ${eventList}">
+                            <td th:text="${event.id}"></td>
+                            <td th:text="${event.name}"></td>
+                            <td>
+                                <ul>
+                                    <li
+                                        th:each="tag : ${eventService.getTagsByEid(event.eid)}"
+                                        th:text="'#' + ${tag.name}"></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                    <form method="post" th:action="@{/event/tag}"
+                        th:object="${eventTagForm}">
+                        <select class="form-control"
+                            th:name="eid"
+                            th:id="eid">
+                            <option th:each="event : ${eventList}"
+                                th:value="${event.eid}"
+                                th:field="*{eid}"
+                                th:text="${event.name}"></option>
+                        </select>
+                        <select class="form-control"
+                            th:name="tid"
+                            th:id="tid">
+                            <option th:each="tag : ${tagList}"
+                                th:value="${tag.tid}"
+                                th:field="*{tid}"
+                                th:text="${tag.name}"></option>
+                        </select>
+                        <input
+                            class="btn btn-outline-primary square-button "
+                            type="submit"
+                            value="タグを追加する">
+                    </form>
+                </div>
             </div>
-        </div>
-    </body>
+        </body>

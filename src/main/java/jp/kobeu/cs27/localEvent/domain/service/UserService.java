@@ -3,15 +3,16 @@ package jp.kobeu.cs27.localEvent.domain.service;
 import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.USER_ALREADY_EXISTS;
 import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.USER_DOES_NOT_EXIST;
 
+import java.util.HashMap;
 import java.util.List;
-
-import javax.swing.text.html.HTML.Tag;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jp.kobeu.cs27.localEvent.application.form.UserForm;
 import jp.kobeu.cs27.localEvent.application.form.UserTagForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
+import jp.kobeu.cs27.localEvent.domain.entity.Area;
+import jp.kobeu.cs27.localEvent.domain.entity.Tag;
 import jp.kobeu.cs27.localEvent.domain.entity.User;
 import jp.kobeu.cs27.localEvent.domain.entity.UserTag;
 import jp.kobeu.cs27.localEvent.domain.repository.TagRepository;
@@ -26,6 +27,7 @@ public class UserService {
     private final UserRepository users;
     private final TagRepository tags;
     private final UserTagRepository userTags;
+    private final AreaService areaService;
 
     /**
      * ユーザを追加する
@@ -210,10 +212,29 @@ public class UserService {
     }
 
     /**
+     * ユーザリストのエリアIDからエリアの一覧を取得する
+     *
+     * @param userList
+     * @return
+     */
+    public List<Area> getAreasByUserList(List<User> userList) {
+        return userList.stream().map(User::getAid).map(areaService::getArea).toList();
+    }
+
+    /**
      * ユーザタグのリストからタグIDのリストを取得する
      */
     public List<Integer> getTidsByUserTags(List<UserTag> userTags) {
         return userTags.stream().map(UserTag::getTid).toList();
+    }
+
+    /**
+     * ユーザIDからタグのリストを入手する
+     */
+    public List<Tag> getTagsByUid(int uid) {
+        List<UserTag> userTagList = getUserTagsByUid(uid);
+        List<Integer> tidList = getTidsByUserTags(userTagList);
+        return tags.findAllByTidIn(tidList);
     }
 
 }

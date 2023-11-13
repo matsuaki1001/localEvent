@@ -29,4 +29,9 @@ public interface TagRepository extends JpaRepository<Tag, Integer> {
      */
     boolean existsByTid(int tid);
 
+    /**
+     * タグIDのリストからタグのリストを入手する
+     */
+    List<Tag> findAllByTidIn(List<Integer> tidList);
+
 }

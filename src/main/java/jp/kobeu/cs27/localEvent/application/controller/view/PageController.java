@@ -25,7 +25,6 @@ import jp.kobeu.cs27.localEvent.domain.service.AreaService;
 import jp.kobeu.cs27.localEvent.domain.service.EventService;
 import jp.kobeu.cs27.localEvent.domain.service.TagService;
 import jp.kobeu.cs27.localEvent.domain.service.UserService;
-import jp.kobeu.cs27.localEvent.application.form.TagForm;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -52,7 +51,7 @@ public class PageController {
 
       model.addAttribute(new TagForm());
 
-      return "tagpage";
+      return "taginput";
    }
 
    @GetMapping("/area")
@@ -60,7 +59,7 @@ public class PageController {
 
       model.addAttribute(new AreaForm());
 
-      return "areapage";
+      return "areainput";
    }
 
    @GetMapping("/event")
@@ -70,7 +69,7 @@ public class PageController {
       model.addAttribute(new EventForm());
       model.addAttribute("areaList", areaList);
 
-      return "eventpage";
+      return "eventinput";
    }
 
    @GetMapping("/user")
@@ -80,7 +79,7 @@ public class PageController {
       model.addAttribute("areaList", areaList);
       model.addAttribute(new UserForm());
 
-      return "userpage";
+      return "userinput";
    }
 
    @GetMapping("/userlist")
@@ -92,6 +91,7 @@ public class PageController {
       List<Tag> tagList = tagService.getTags();
       model.addAttribute("tagList", tagList);
       model.addAttribute("userList", userList);
+      model.addAttribute("userService", userService);
 
       return "userlistpage";
    }
@@ -105,6 +105,7 @@ public class PageController {
       List<Tag> tagList = tagService.getTags();
       model.addAttribute("tagList", tagList);
       model.addAttribute("eventList", eventList);
+      model.addAttribute("eventService", eventService);
 
       return "eventlistpage";
    }

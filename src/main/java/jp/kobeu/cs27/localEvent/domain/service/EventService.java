@@ -6,6 +6,7 @@ import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
 import jp.kobeu.cs27.localEvent.domain.entity.Event;
 import jp.kobeu.cs27.localEvent.domain.entity.EventTag;
+import jp.kobeu.cs27.localEvent.domain.entity.Tag;
 import jp.kobeu.cs27.localEvent.domain.repository.EventRepository;
 import jp.kobeu.cs27.localEvent.domain.repository.EventTagRepository;
 import jp.kobeu.cs27.localEvent.domain.repository.TagRepository;
@@ -223,4 +224,24 @@ public class EventService {
         return eventList.stream().filter(event -> event.getStartday().isBefore(event.getStartday().plusDays(7)))
                 .toList();
     }
+
+    /**
+     * イベントタグのリストからタグIDのリストを取得する
+     *
+     * @param eventTagList
+     * @return
+     */
+    public List<Integer> getTagIdListByEventTagList(List<EventTag> eventTagList) {
+        return eventTagList.stream().map(eventTag -> eventTag.getTid()).toList();
+    }
+
+    /**
+     * イベントIDからタグのリストを取得する
+     */
+    public List<Tag> getTagsByEid(int eid) {
+        List<EventTag> eventTagList = eventTags.findAllByEid(eid);
+        List<Integer> tidList = getTagIdListByEventTagList(eventTagList);
+        return tags.findAllByTidIn(tidList);
+    }
+
 }

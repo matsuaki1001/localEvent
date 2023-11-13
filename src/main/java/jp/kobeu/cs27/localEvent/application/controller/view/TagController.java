@@ -54,7 +54,7 @@ public class TagController {
         model.addAttribute("name", form.getName());
         model.addAttribute("description", form.getDescription());
 
-        return "tagconfirm";
+        return "taginputconfirm";
 
     }
 
@@ -83,5 +83,7 @@ public class TagController {
         return "redirect:/";
 
     }
+
+     
 
 }

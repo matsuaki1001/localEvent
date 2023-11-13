@@ -11,12 +11,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
-import jp.kobeu.cs27.localEvent.application.form.TagForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.entity.Area;
 import jp.kobeu.cs27.localEvent.domain.service.AreaService;
 import jp.kobeu.cs27.localEvent.domain.service.EventService;
-import jp.kobeu.cs27.localEvent.domain.service.TagService;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -77,7 +75,7 @@ public class EventController {
             return "redirect:/event";
         }
 
-        return "eventconfirm";
+        return "eventinputconfirm";
 
     }
 
