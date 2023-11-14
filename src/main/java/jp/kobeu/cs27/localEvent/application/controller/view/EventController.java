@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
+import jp.kobeu.cs27.localEvent.application.form.IdForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.entity.Area;
 import jp.kobeu.cs27.localEvent.domain.service.AreaService;
@@ -129,5 +130,59 @@ public class EventController {
         return "redirect:/";
 
     }
+
+    
+    // /**
+    //  * イベントを削除する
+    //  */
+    // @PostMapping("/event/delete")
+    // public String deleteEvent(Model model, RedirectAttributes attributes,
+    //         @ModelAttribute @Validated IdForm form,
+    //         BindingResult bindingResult) {
+
+    //     // フォームにバリデーション違反があった場合、タグ登録ページに戻る
+    //     if (bindingResult.hasErrors()) {
+    //         attributes.addFlashAttribute("isEventFormError", true);
+    //         return "redirect:/event";
+    //     }
+
+    //     // タグとイベントを紐付ける
+    //     try {
+    //         eventService.deleteEvent(form);
+    //     } catch (ValidationException e) {
+    //         attributes.addFlashAttribute("isEventAlreadyExistsError", true);
+    //         return "redirect:/event";
+    //     }
+
+    //     return "redirect:/";
+
+    // }
+
+    // /**
+    //  * イベント削除確認画面を表示する
+    //  */
+    // @GetMapping("/event/delete/confirm")
+    // public String showDeleteEventConfirmPage(Model model, RedirectAttributes attributes,
+    //         @ModelAttribute @Validated IdForm form,
+    //         BindingResult bindingResult) {
+
+    //     // フォームにバリデーション違反があった場合、タグ登録ページに戻る
+    //     if (bindingResult.hasErrors()) {
+    //         attributes.addFlashAttribute("isEventFormError", true);
+    //         return "redirect:/event";
+    //     }
+
+    //     // タグとイベントを紐付ける
+    //     try {
+    //         EventForm eventForm = eventService.getEventForm(form.getId());
+    //         model.addAttribute("eventForm", eventForm);
+    //     } catch (ValidationException e) {
+    //         attributes.addFlashAttribute("isEventAlreadyExistsError", true);
+    //         return "redirect:/event";
+    //     }
+
+    //     return "eventdeleteconfirm";
+
+    // }
 
 }

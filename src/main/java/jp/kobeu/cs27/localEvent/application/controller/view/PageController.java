@@ -12,8 +12,8 @@ import java.util.List;
 import jp.kobeu.cs27.localEvent.application.form.AreaForm;
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
+import jp.kobeu.cs27.localEvent.application.form.IdForm;
 import jp.kobeu.cs27.localEvent.application.form.TagForm;
-import jp.kobeu.cs27.localEvent.application.form.UidForm;
 import jp.kobeu.cs27.localEvent.application.form.UserForm;
 import jp.kobeu.cs27.localEvent.application.form.UserTagForm;
 import jp.kobeu.cs27.localEvent.domain.entity.Area;
@@ -113,7 +113,7 @@ public class PageController {
    @GetMapping("/login")
    public String showLoginPage(Model model) {
 
-      model.addAttribute(new UidForm());
+      model.addAttribute(new IdForm());
       List<User> userList = userService.getusers();
       model.addAttribute("userList", userList);
 
@@ -122,7 +122,7 @@ public class PageController {
 
    @GetMapping("/service")
    public String showServicePage(Model model, RedirectAttributes attributes,
-         @ModelAttribute @Validated UidForm form,
+         @ModelAttribute @Validated IdForm form,
          BindingResult bindingResult) {
 
       // フォームにバリデーション違反があった場合、タグ登録ページに戻る
@@ -133,7 +133,7 @@ public class PageController {
       }
 
       // ユーザIDを変数に格納する
-      final int uid = form.getUid();
+      final int uid = form.getId();
 
       // ユーザが存在するか確認する
       if (!userService.existsUser(uid)) {

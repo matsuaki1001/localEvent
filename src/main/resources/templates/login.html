@@ -14,13 +14,13 @@
                 <div class="col-12">
                     <h1>ログイン</h1>
                     <form method="get" th:action="@{/service}"
-                        th:object="${uidForm}">
+                        th:object="${idForm}">
                         <select class="form-control"
-                            th:name="uid"
-                            th:id="uid">
+                            th:name="id"
+                            th:id="id">
                             <option th:each="user : ${userList}"
                                 th:value="${user.uid}"
-                                th:field="*{uid}"
+                                th:field="*{id}"
                                 th:text="${user.name}"></option>
                         </select>
                         <input class="btn btn-primary" type="submit"

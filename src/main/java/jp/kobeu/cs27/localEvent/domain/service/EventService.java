@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
+import jp.kobeu.cs27.localEvent.application.form.IdForm;
 import jp.kobeu.cs27.localEvent.domain.entity.Event;
 import jp.kobeu.cs27.localEvent.domain.entity.EventTag;
 import jp.kobeu.cs27.localEvent.domain.entity.Tag;
@@ -81,22 +82,26 @@ public class EventService {
     /**
      * イベントを削除する
      * 
-     * @param tid イベントID
+     * @param IdForm イベントIDのフォーム
      */
     @Transactional
-    public void deleteEvent(int tid) {
+    public void deleteEvent(IdForm form) {
+
+        // イベントIDを変数に格納する
+        final int eid = form.getId();
 
         // イベントが存在しない場合は例外を投げる
-        if (!events.existsByEid(tid)) {
+        if (!events.existsByEid(eid)) {
             throw new ValidationException(
                     EVENT_DOES_NOT_EXIST,
-                    "delete the Event",
-                    String.format("Event id %d not found", tid));
+                    "delete the event",
+                    String.format("event id %d not found", eid));
         }
 
         // イベントを削除する
-        events.deleteById(tid);
+        events.deleteByEid(eid);
     }
+    
 
     /**
      * 指定したイベントがDBに存在するかどうかを返す

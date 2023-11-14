@@ -8,15 +8,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * ユーザIDフォーム
+ * 削除用IDフォーム
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UidForm {
+public class IdForm {
     
     //ユーザID
     @NotNull
-    private int uid;
+    private int id;
 }
