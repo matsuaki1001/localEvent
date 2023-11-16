@@ -6,15 +6,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import jp.kobeu.cs27.localEvent.application.form.UserForm;
 import jp.kobeu.cs27.localEvent.application.form.UserTagForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.entity.Area;
+import jp.kobeu.cs27.localEvent.domain.entity.User;
 import jp.kobeu.cs27.localEvent.domain.service.AreaService;
 import jp.kobeu.cs27.localEvent.domain.service.UserService;
 import lombok.AllArgsConstructor;
@@ -74,6 +74,49 @@ public class UserController {
     }
 
     /**
+     * ユーザIDを受け取りユーザ詳細画面を表示する
+     * 
+     * @param model
+     * @param attributes
+     * @param form
+     * @param bindingResult
+     * @return
+     */
+    @GetMapping("/user/detail")
+    public String showUserDetail(Model model, RedirectAttributes attributes,
+            @RequestParam("uid") int uid) {
+
+        // ユーザが存在するか確認する
+        if (!userService.existsUser(uid)) {
+            attributes.addFlashAttribute("isUserNotFoundError", true);
+            return "redirect:/userlist";
+        }
+
+        // ユーザを取得する
+        User user = userService.getUser(uid);
+
+        model.addAttribute("uid", uid);
+        model.addAttribute("name", user.getName());
+        model.addAttribute("email", user.getEmail());
+        model.addAttribute("password", user.getPassword());
+        model.addAttribute("aid", user.getAid());
+
+        int aid = user.getAid();
+
+        Area area;
+        try {
+            area = areaService.getArea(aid);
+            model.addAttribute("areaName", area.getName());
+        } catch (ValidationException e) {
+            attributes.addFlashAttribute("isAreaNotFoundError", true);
+            return "redirect:/userlist";
+        }
+
+        return "userdetail";
+
+    }
+
+    /**
      * ユーザを登録する
      */
     @PostMapping("/user/register")
@@ -107,11 +150,21 @@ public class UserController {
             @ModelAttribute @Validated UserTagForm form,
             BindingResult bindingResult) {
 
+        // ユーザIDとタグIDを変数に格納する
+        final int uid = form.getUid();
+        final int tid = form.getTid();
+
+        // タグが既に存在するか確認する
+        if (userService.existsUserTag(uid, tid)) {
+            attributes.addFlashAttribute("isUserTagAlreadyExistsError", true);
+            return "redirect:/userlist";
+        }
+
         // フォームにバリデーション違反があった場合、タグ登録ページに戻る
         if (bindingResult.hasErrors()) {
             attributes.addFlashAttribute("isUserFormError", true);
 
-            return "redirect:/user";
+            return "redirect:/userlist";
         }
 
         // タグを登録する
@@ -119,16 +172,48 @@ public class UserController {
             userService.addTagToUser(form);
         } catch (ValidationException e) {
             attributes.addFlashAttribute("isUserAlreadyExistsError", true);
-            return "redirect:/user";
+            return "redirect:/userlist";
         }
 
-        return "redirect:/";
+        return "redirect:/userlist";
 
     }
 
-  
+    /**
+     * ユーザ削除画面を表示する
+     */
+    @GetMapping("/user/delete/{uid}")
+    public String deleteEvent(Model model, RedirectAttributes attributes, @PathVariable("uid") int uid) {
 
+        // イベントが存在しない場合は例外を投げる
+        if (!userService.existsUser(uid)) {
+            attributes.addFlashAttribute("isUserNotFoundError", true);
+            return "redirect:/userlist";
+        }
 
+        // ユーザを取得する
+        User user = userService.getUser(uid);
+        model.addAttribute("uid", user.getUid());
+        model.addAttribute("name", user.getName());
+        return "userdeleteconfirm";
 
+    }
+
+    /**
+     * ユーザ削除確認画面を表示する
+     */
+    @GetMapping("/user/delete/confirm/{uid}")
+    public String showDeleteEventConfirmPage(Model model, RedirectAttributes attributes,
+            @PathVariable("uid") int uid) {
+
+        // イベントが存在しない場合は例外を投げる
+        if (!userService.existsUser(uid)) {
+            attributes.addFlashAttribute("isUserNotFoundError", true);
+            return "redirect:/userlist";
+        }
+        // イベントを削除する
+        userService.deleteUser(uid);
+        return "redirect:/userlist";
+    }
 
 }

@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8" />
-        <title>ユーザ登録確認</title>
+        <title>ユーザ詳細</title>
         <link rel="stylesheet"
             th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
         <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"
@@ -12,6 +12,10 @@
         <h1>ユーザ登録確認</h1>
         <table class="table text-dark text-center mb-3 ">
             <tbody>
+                <tr>
+                    <th scope="row">ユーザID</th>
+                    <td>[[${uid}]]</td>
+                </tr>
                 <tr>
                     <th scope="row">名前</th>
                     <td>[[${name}]]</td>
@@ -34,23 +38,5 @@
                 </tr>
             </tbody>
         </table>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <form method="post" th:action="@{/user/register}">
-                        <input type="hidden" name="uid" th:value="${uid}">
-                        <input type="hidden" name="name" th:value="${name}">
-                        <input type="hidden" name="description"
-                            th:value="${description}">
-                        <input type="hidden" name="email" th:value="${email}">
-                        <input type="hidden" name="password"
-                            th:value="${password}">
-                        <input type="hidden" name="aid" th:value="${aid}">
-                        <input class="btn btn-primary" type="submit" value="登録">
-                    </form>
-                </div>
-            </div>
-        </div>
-
     </body>
 </html>

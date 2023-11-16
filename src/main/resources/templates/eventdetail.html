@@ -2,22 +2,24 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8" />
-        <title>イベント登録確認</title>
+        <title>イベント詳細</title>
         <link rel="stylesheet"
             th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
         <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"
             type="text/javascript"></script>
     </head>
+
     <body>
-
-        <h5>イベント登録確認</h5>
-
         <div class="container">
+            <h1>イベント詳細</h1>
             <div class="row">
                 <div class="col-12">
-
                     <table class="table text-dark text-center mb-3">
                         <tbody>
+                            <tr>
+                                <th scope="row">イベントID</th>
+                                <td> [[${eid}]]</td>
+                            </tr>
                             <tr>
                                 <th scope="row">イベントの名前</th>
                                 <td> [[${name}]]</td>
@@ -79,31 +81,6 @@
 
                         </tbody>
                     </table>
-                    <form method="post" th:action="@{/event/register}"
-                        class="mb-3">
-                        <input type="hidden" name="eid" th:value="${eid}">
-                        <input type="hidden" name="name" th:value="${name}">
-                        <input type="hidden" name="description"
-                            th:value="${description}">
-                        <input type="hidden" name="startday"
-                            th:value="${startday}">
-                        <input type="hidden" name="endday" th:value="${endday}">
-                        <input type="hidden" name="starttime"
-                            th:value="${starttime}">
-                        <input type="hidden" name="endtime"
-                            th:value="${endtime}">
-                        <input type="hidden" name="place" th:value="${place}">
-                        <input type="hidden" name="fee" th:value="${fee}">
-                        <input type="hidden" name="parking"
-                            th:value="${parking}">
-                        <input type="hidden" name="access" th:value="${access}">
-                        <input type="hidden" name="aid" th:value="${aid}">
-                        <input type="hidden" name="organizer"
-                            th:value="${organizer}">
-                        <input type="hidden" name="capacity"
-                            th:value="${capacity}">
-                        <input class="btn btn-primary" type="submit" value="登録">
-                    </form>
                 </div>
             </div>
         </div>

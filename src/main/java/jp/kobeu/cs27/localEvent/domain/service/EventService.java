@@ -85,10 +85,7 @@ public class EventService {
      * @param IdForm イベントIDのフォーム
      */
     @Transactional
-    public void deleteEvent(IdForm form) {
-
-        // イベントIDを変数に格納する
-        final int eid = form.getId();
+    public void deleteEvent(int eid) {
 
         // イベントが存在しない場合は例外を投げる
         if (!events.existsByEid(eid)) {
@@ -248,5 +245,13 @@ public class EventService {
         List<Integer> tidList = getTagIdListByEventTagList(eventTagList);
         return tags.findAllByTidIn(tidList);
     }
+
+    /**
+     * イベントタグが存在するかどうかを返す
+     */
+    public boolean existsEventTag(int eid, int tid) {
+        return eventTags.existsByEidAndTid(eid, tid);
+    }
+
 
 }

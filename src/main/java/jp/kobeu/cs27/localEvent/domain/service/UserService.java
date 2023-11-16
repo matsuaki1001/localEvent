@@ -237,4 +237,11 @@ public class UserService {
         return tags.findAllByTidIn(tidList);
     }
 
+    /**
+     * ユーザタグが存在するかどうかを返す
+     */
+    public boolean existsUserTag(int uid, int tid) {
+        return userTags.existsByUidAndTid(uid, tid);
+    }
+
 }

@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8" />
-        <title>Spring Boot Sample</title>
+        <title>イベント</title>
         <link rel="stylesheet"
             th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
         <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"
@@ -23,13 +23,28 @@
                     <tbody>
                         <tr th:each="event : ${eventList}">
                             <td th:text="${event.eid}"></td>
-                            <td th:text="${event.name}"></td>
+                            <td>
+                                <a
+                                    th:href="@{/event/detail(eid=${event.eid})}"
+                                    th:text="${event.name}"></a>
+                            </td>
                             <td>
                                 <ul>
                                     <li
                                         th:each="tag : ${eventService.getTagsByEid(event.eid)}"
                                         th:text="'#' + ${tag.name}"></li>
                                 </ul>
+                            </td>
+                            <td>
+                                <td>
+                                    <form method="get"
+                                        th:action="@{/event/delete/{eid} (eid=${event.eid})}">
+                                        <input
+                                            class="btn btn-outline-primary square-button "
+                                            type="submit"
+                                            value="削除する">
+                                    </form>
+                                </td>
                             </td>
                         </tr>
                     </table>

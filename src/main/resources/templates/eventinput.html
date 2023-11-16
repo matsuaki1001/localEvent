@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8" />
-        <title>Spring Boot Sample</title>
+        <title>イベント追加</title>
         <link rel="stylesheet"
             th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
         <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"
@@ -27,7 +27,7 @@
                         <label for="startday" class="form-label">イベントの開始日</label>
                         <input class="form-control"
                             placeholder="イベントの開始日"
-                            th:field="*{startday}" type=date id="startday">
+                            required th:field="*{startday}" type=date id="startday">
                         <label for="endday" class="form-label">イベントの終了日</label>
                         <input class="form-control"
                             placeholder="イベントの終了日"
@@ -79,8 +79,6 @@
                         <input class="btn btn-primary" type="submit" value="登録">
                     </form>
 
-                    <h1 th:if="${isEventFormError}">フォーム間違い</h1>
-                    <h1 th:if="${isEventAlreadyExistsError}">イベントもうある</h1>
                 </div>
             </div>
         </div>

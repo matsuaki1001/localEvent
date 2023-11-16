@@ -42,7 +42,6 @@ public class AreaController {
         // タグが既に存在するか確認する
         if (areaService.existsArea(aid)) {
             attributes.addFlashAttribute("isAreaAlreadyExistsError", true);
-
             return "redirect:/area";
         }
 

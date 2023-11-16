@@ -1,7 +1,6 @@
 package jp.kobeu.cs27.localEvent.application.form;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

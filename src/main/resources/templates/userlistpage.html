@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8" />
-        <title>Spring Boot Sample</title>
+        <title>ユーザ</title>
         <link rel="stylesheet"
             th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" />
         <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"
@@ -24,13 +24,26 @@
                     <tbody>
                         <tr th:each="user : ${userList}">
                             <td th:text="${user.uid}"></td>
-                            <td th:text="${user.name}"></td>
+                            <td>
+                                <a
+                                    th:href="@{/user/detail(uid=${user.uid})}"
+                                    th:text="${user.name}"></a>
+                            </td>
                             <td>
                                 <ul>
                                     <li
                                         th:each="tag : ${userService.getTagsByUid(user.uid)}"
                                         th:text="'#' + ${tag.name}"></li>
                                 </ul>
+                            </td>
+                            <td>
+                                <form method="get"
+                                    th:action="@{/user/delete/{uid} (uid=${user.uid})}">
+                                    <input
+                                        class="btn btn-outline-primary square-button "
+                                        type="submit"
+                                        value="削除する">
+                                </form>
                             </td>
                         </tr>
                     </table>
@@ -53,7 +66,8 @@
                                 th:field="*{tid}"
                                 th:text="${tag.name}"></option>
                         </select>
-                        <input class="btn btn-outline-primary square-button "
+                        <input
+                            class="btn btn-outline-primary square-button "
                             type="submit"
                             value="タグを追加する">
                     </form>
