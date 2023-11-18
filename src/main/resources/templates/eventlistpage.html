@@ -36,16 +36,24 @@
                                 </ul>
                             </td>
                             <td>
-                                <td>
-                                    <form method="get"
-                                        th:action="@{/event/delete/{eid} (eid=${event.eid})}">
-                                        <input
-                                            class="btn btn-outline-primary square-button "
-                                            type="submit"
-                                            value="削除する">
-                                    </form>
-                                </td>
+                                <form method="get"
+                                    th:action="@{/event/delete/{eid} (eid=${event.eid})}">
+                                    <input
+                                        class="btn btn-outline-primary square-button "
+                                        type="submit"
+                                        value="削除する">
+                                </form>
                             </td>
+                            <td>
+                                <form method="get"
+                                    th:action="@{/event/update/{eid} (eid=${event.eid})}">
+                                    <input
+                                        class="btn btn-outline-primary square-button "
+                                        type="submit"
+                                        value="更新する">
+                                </form>
+                            </td>
+
                         </tr>
                     </table>
                     <form method="post" th:action="@{/event/tag}"

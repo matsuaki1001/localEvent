@@ -1,5 +1,7 @@
 package jp.kobeu.cs27.localEvent.application.controller.view;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -200,7 +202,7 @@ public class UserController {
     }
 
     /**
-     * ユーザ削除確認画面を表示する
+     * ユーザを削除する
      */
     @GetMapping("/user/delete/confirm/{uid}")
     public String showDeleteEventConfirmPage(Model model, RedirectAttributes attributes,
@@ -214,6 +216,65 @@ public class UserController {
         // イベントを削除する
         userService.deleteUser(uid);
         return "redirect:/userlist";
+    }
+
+    /**
+     * ユーザを更新する
+     */
+    @GetMapping("/user/update/confirm/{uid}")
+    public String updateUser(Model model, RedirectAttributes attributes, @PathVariable("uid") int uid,
+            @ModelAttribute @Validated UserForm form, BindingResult bindingResult) {
+
+        // フォームにバリデーション違反があった場合、タグ登録ページに戻る
+        if (bindingResult.hasErrors()) {
+            attributes.addFlashAttribute("isUserFormError", true);
+
+            return "redirect:/userlist";
+        }
+
+        form.setUid(uid);
+        // ユーザを更新する
+        try {
+            userService.updateUser(form);
+        } catch (ValidationException e) {
+            attributes.addFlashAttribute("isUserAlreadyExistsError", true);
+            return "redirect:/userlist";
+        }
+        attributes.addFlashAttribute("isUserUpdateSuccess", true);
+        return "redirect:/user/update/" + uid;
+
+    }
+
+    /**
+     * ユーザの更新のページを表示する
+     */
+    @GetMapping("/user/update/{uid}")
+    public String confirmUserUpdate(
+            Model model,
+            RedirectAttributes attributes,
+            @PathVariable("uid") int uid) {
+
+        // ユーザが存在しない場合は例外を投げる
+        if (!userService.existsUser(uid)) {
+            attributes.addFlashAttribute("isUserNotFoundError", true);
+            return "redirect:/userlist";
+        }
+
+        // ユーザを取得する
+        User user = userService.getUser(uid);
+        List<Area> areaList = areaService.getAllareas();
+
+        // ユーザ情報をモデルに格納する
+        model.addAttribute(new UserForm());
+        model.addAttribute("uid", user.getUid());
+        model.addAttribute("name", user.getName());
+        model.addAttribute("email", user.getEmail());
+        model.addAttribute("password", user.getPassword());
+        model.addAttribute("aid", user.getAid());
+        model.addAttribute("areaList", areaList);
+
+        // ユーザ情報更新ページ
+        return "userupdate";
     }
 
 }

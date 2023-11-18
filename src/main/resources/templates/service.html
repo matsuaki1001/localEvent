@@ -11,20 +11,31 @@
 
     <body>
         <div class="container">
-            <h1>Spring Boot Sample</h1>
+            <h1>サービス</h1>
             <div class="row">
                 <div class="col-12">
-                    <table>
+                    <table class="table">
                         <thead>
                             <tr>
-                                <th>Event Name</th>
-                                <th>Event Date</th>
+                                <th>イベントID</th>
+                                <th>イベント名</th>
+                                <th>タグ</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="event : ${eventList}">
-                                <td th:text="${event.name}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </body>
+                                <td th:text="${event.eid}"></td>
+                                <td>
+                                    <a
+                                        th:href="@{/event/detail(eid=${event.eid})}"
+                                        th:text="${event.name}"></a>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li
+                                            th:each="tag : ${eventService.getTagsByEid(event.eid)}"
+                                            th:text="'#' + ${tag.name}"></li>
+                                    </ul>
+                                </td>
+                            </body>
+                        </html>

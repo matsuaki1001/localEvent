@@ -1,5 +1,7 @@
 package jp.kobeu.cs27.localEvent.application.controller.view;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,9 +15,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
+import jp.kobeu.cs27.localEvent.application.form.UserForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.entity.Area;
 import jp.kobeu.cs27.localEvent.domain.entity.Event;
+import jp.kobeu.cs27.localEvent.domain.entity.User;
 import jp.kobeu.cs27.localEvent.domain.service.AreaService;
 import jp.kobeu.cs27.localEvent.domain.service.EventService;
 import lombok.AllArgsConstructor;
@@ -118,7 +122,6 @@ public class EventController {
         model.addAttribute("aid", event.getAid());
         model.addAttribute("organizer", event.getOrganizer());
         model.addAttribute("capacity", event.getCapacity());
-        model.addAttribute("capacity", event.getCapacity());
 
         final int aid = event.getAid();
         try {
@@ -140,13 +143,13 @@ public class EventController {
     public String registerTag(Model model, RedirectAttributes attributes, @ModelAttribute @Validated EventForm form,
             BindingResult bindingResult) {
 
-        // フォームにバリデーション違反があった場合、タグ登録ページに戻る
+        // フォームにバリデーション違反があった場合、イベント登録ページに戻る
         if (bindingResult.hasErrors()) {
             attributes.addFlashAttribute("isEventFormError", true);
             return "redirect:/event";
         }
 
-        // タグを登録する
+        // イベントを登録する
         try {
             eventService.addEvent(form);
         } catch (ValidationException e) {
@@ -229,6 +232,74 @@ public class EventController {
         // イベントを削除する
         eventService.deleteEvent(eid);
         return "redirect:/eventlist";
+    }
+
+    /**
+     * イベントを更新する
+     */
+    @GetMapping("/event/update/confirm/{eid}")
+    public String updateEvent(Model model, RedirectAttributes attributes, @PathVariable("eid") int eid,
+            @ModelAttribute @Validated EventForm form, BindingResult bindingResult) {
+
+        // フォームにバリデーション違反があった場合、イベントページに戻る
+        if (bindingResult.hasErrors()) {
+            attributes.addFlashAttribute("isEventFormError", true);
+
+            return "redirect:/eventlist";
+        }
+
+        form.setEid(eid);
+        // イベントを更新する
+        try {
+            eventService.updateEvent(form);
+        } catch (ValidationException e) {
+            attributes.addFlashAttribute("isEventAlreadyExistsError", true);
+            return "redirect:/eventlist";
+        }
+        attributes.addFlashAttribute("isEventUpdateSuccess", true);
+        return "redirect:/event/update/" + eid;
+
+    }
+
+    /**
+     * イベントの更新のページを表示する
+     */
+    @GetMapping("/event/update/{eid}")
+    public String confirmUserUpdate(
+            Model model,
+            RedirectAttributes attributes,
+            @PathVariable("eid") int eid) {
+
+        // イベントが存在しない場合は例外を投げる
+        if (!eventService.existsEvent(eid)) {
+            attributes.addFlashAttribute("isEventNotFoundError", true);
+            return "redirect:/eventlist";
+        }
+
+        // イベントを取得する
+        Event event = eventService.getEvent(eid);
+        List<Area> areaList = areaService.getAllareas();
+
+        // イベント情報をモデルに格納する
+        model.addAttribute(new EventForm());
+        model.addAttribute("eid", event.getEid());
+        model.addAttribute("name", event.getName());
+        model.addAttribute("description", event.getDescription());
+        model.addAttribute("startday", event.getStartday());
+        model.addAttribute("endday", event.getEndday());
+        model.addAttribute("starttime", event.getStarttime());
+        model.addAttribute("endtime", event.getEndtime());
+        model.addAttribute("place", event.getPlace());
+        model.addAttribute("fee", event.getFee());
+        model.addAttribute("parking", event.isParking());
+        model.addAttribute("access", event.getAccess());
+        model.addAttribute("aid", event.getAid());
+        model.addAttribute("organizer", event.getOrganizer());
+        model.addAttribute("capacity", event.getCapacity());
+        model.addAttribute("areaList", areaList);
+
+        // イベント情報更新ページ
+        return "eventupdate";
     }
 
 }

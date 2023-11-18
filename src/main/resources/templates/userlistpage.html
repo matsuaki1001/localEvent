@@ -45,6 +45,15 @@
                                         value="削除する">
                                 </form>
                             </td>
+                            <td>
+                                <form method="get"
+                                    th:action="@{/user/update/{uid} (uid=${user.uid})}">
+                                    <input
+                                        class="btn btn-outline-primary square-button "
+                                        type="submit"
+                                        value="更新する">
+                                </form>
+                            </td>
                         </tr>
                     </table>
 

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import jp.kobeu.cs27.localEvent.configuration.exception.*;
 import jp.kobeu.cs27.localEvent.domain.service.*;
 import jp.kobeu.cs27.localEvent.domain.entity.Event;
+import jp.kobeu.cs27.localEvent.domain.entity.User;
 import jp.kobeu.cs27.localEvent.domain.entity.UserTag;
 
 @RestController
@@ -30,12 +31,18 @@ public class localEventRestController {
     public Response<List<Event>> searchEvent(
             @RequestParam("uid") int uid) {
 
+        // ユーザIDからユーザを検索する
+        User user = userService.getUser(uid);
+        int aid = user.getAid();
+
         List<UserTag> userTagList = userService.getUserTagsByUid(uid);
         List<Integer> tidList = userService.getTidsByUserTags(userTagList);
         List<Event> eventList = eventService.getEventsByTagIdList(tidList);
+        List<Event> eventListByArea = eventService.getEventsByAreaId(aid, eventList);
+        List<Event> eventListByOneMonth = eventService.getEventsByOneMonth(eventListByArea);
 
         // ユーザを検索し、結果をResponse型でラップして返す
-        return ResponseCreator.succeed(eventList);
+        return ResponseCreator.succeed(eventListByOneMonth);
 
     }
 

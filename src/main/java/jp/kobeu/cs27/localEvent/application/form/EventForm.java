@@ -1,12 +1,11 @@
 package jp.kobeu.cs27.localEvent.application.form;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Date;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +31,7 @@ public class EventForm {
 
     // イベントの開始日
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
     private LocalDate startday;
 
     // イベントの終了日

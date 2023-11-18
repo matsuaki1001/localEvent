@@ -98,7 +98,6 @@ public class EventService {
         // イベントを削除する
         events.deleteByEid(eid);
     }
-    
 
     /**
      * 指定したイベントがDBに存在するかどうかを返す
@@ -220,10 +219,10 @@ public class EventService {
     }
 
     /**
-     * イベントリストの中から現在から一週間以内に開催されるイベントを取得する
+     * イベントリストの中から現在から一ヶ月以内に開催されるイベントを取得する
      */
-    public List<Event> getEventsWithinAWeek(List<Event> eventList) {
-        return eventList.stream().filter(event -> event.getStartday().isBefore(event.getStartday().plusDays(7)))
+    public List<Event> getEventsByOneMonth(List<Event> eventList) {
+        return eventList.stream().filter(event -> event.getStartday().isBefore(event.getStartday().plusMonths(1)))
                 .toList();
     }
 
@@ -253,5 +252,11 @@ public class EventService {
         return eventTags.existsByEidAndTid(eid, tid);
     }
 
+    /**
+     * イベントリストからユーザのエリアIDと一致するイベントのリストを取得する
+     */
+    public List<Event> getEventsByAreaId(int aid, List<Event> eventList) {
+        return eventList.stream().filter(event -> event.getAid() == aid).toList();
+    }
 
 }

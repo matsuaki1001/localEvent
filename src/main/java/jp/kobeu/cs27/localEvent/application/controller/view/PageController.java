@@ -142,11 +142,18 @@ public class PageController {
          return "redirect:/login";
       }
 
+      // ユーザIDからユーザを取得する
+      User user = userService.getUser(uid);
+      int aid = user.getAid();
+
       List<UserTag> userTagList = userService.getUserTagsByUid(uid);
       List<Integer> tidList = userService.getTidsByUserTags(userTagList);
       List<Event> eventList = eventService.getEventsByTagIdList(tidList);
+      List<Event> eventListByArea = eventService.getEventsByAreaId(aid, eventList);
+      List<Event> eventListByOneMonth = eventService.getEventsByOneMonth(eventListByArea);
 
-      model.addAttribute("eventList", eventList);
+      model.addAttribute("eventList", eventListByOneMonth);
+      model.addAttribute("eventService", eventService);
 
       return "service";
    }
