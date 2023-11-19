@@ -7,6 +7,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.servlet.http.HttpServletResponse;
+
 import java.util.List;
 
 import jp.kobeu.cs27.localEvent.application.form.AreaForm;
@@ -102,9 +105,10 @@ public class PageController {
          BindingResult bindingResult) {
 
       List<Event> eventList = eventService.getevents();
+      List<Event> eventListSorted = eventService.getEventsByStartday(eventList);
       List<Tag> tagList = tagService.getTags();
       model.addAttribute("tagList", tagList);
-      model.addAttribute("eventList", eventList);
+      model.addAttribute("eventList", eventListSorted);
       model.addAttribute("eventService", eventService);
 
       return "eventlistpage";
@@ -145,14 +149,15 @@ public class PageController {
       // ユーザIDからユーザを取得する
       User user = userService.getUser(uid);
       int aid = user.getAid();
-
       List<UserTag> userTagList = userService.getUserTagsByUid(uid);
       List<Integer> tidList = userService.getTidsByUserTags(userTagList);
       List<Event> eventList = eventService.getEventsByTagIdList(tidList);
       List<Event> eventListByArea = eventService.getEventsByAreaId(aid, eventList);
       List<Event> eventListByOneMonth = eventService.getEventsByOneMonth(eventListByArea);
+      List<Event> eventListByShuffle = eventService.getEventsByShuffle(eventListByOneMonth);
 
-      model.addAttribute("eventList", eventListByOneMonth);
+      model.addAttribute("user", user);
+      model.addAttribute("eventList", eventListByShuffle);
       model.addAttribute("eventService", eventService);
 
       return "service";

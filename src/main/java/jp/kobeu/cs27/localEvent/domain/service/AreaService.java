@@ -12,14 +12,12 @@ import jp.kobeu.cs27.localEvent.application.form.AreaForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.entity.Area;
 import jp.kobeu.cs27.localEvent.domain.repository.AreaRepository;
-import jp.kobeu.cs27.localEvent.domain.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class AreaService {
     private final AreaRepository areas;
-    private final EventRepository events;
 
     /**
      * エリアを登録する

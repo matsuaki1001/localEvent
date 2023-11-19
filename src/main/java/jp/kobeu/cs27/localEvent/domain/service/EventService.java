@@ -1,10 +1,10 @@
 package jp.kobeu.cs27.localEvent.domain.service;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
-import jp.kobeu.cs27.localEvent.application.form.IdForm;
 import jp.kobeu.cs27.localEvent.domain.entity.Event;
 import jp.kobeu.cs27.localEvent.domain.entity.EventTag;
 import jp.kobeu.cs27.localEvent.domain.entity.Tag;
@@ -15,6 +15,9 @@ import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import org.springframework.transaction.annotation.Transactional;
 import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
@@ -169,12 +172,19 @@ public class EventService {
     }
 
     /**
-     * タグとイベントの紐付けを削除する
+     * タグとイベントの紐づけを解除する
+     * 
+     * @param form イベントタグのフォーム
+     *
+     * @return
      */
-    public void deleteTagFromEvent(int etid) {
+    @Transactional
+    public void deleteTagFromEvent(EventTagForm form) {
 
-        int eid = eventTags.findByEtid(etid).getEid();
-        int tid = eventTags.findByEtid(etid).getTid();
+        // イベントIDを変数に格納する
+        final int eid = form.getEid();
+        final int tid = form.getTid();
+
         // イベントが存在しない場合は例外を投げる
         if (!events.existsByEid(eid)) {
             throw new ValidationException(
@@ -192,7 +202,7 @@ public class EventService {
         }
 
         // イベントにタグを紐付ける
-        eventTags.deleteByEtid(etid);
+        eventTags.deleteByEidAndTid(eid, tid);
     }
 
     /**
@@ -222,7 +232,11 @@ public class EventService {
      * イベントリストの中から現在から一ヶ月以内に開催されるイベントを取得する
      */
     public List<Event> getEventsByOneMonth(List<Event> eventList) {
-        return eventList.stream().filter(event -> event.getStartday().isBefore(event.getStartday().plusMonths(1)))
+        LocalDate now = LocalDate.now();
+        LocalDate oneMonthLater = now.plusMonths(1); // 1ヶ月後の日付を取得
+
+        return eventList.stream()
+                .filter(event -> !event.getStartday().isAfter(oneMonthLater) && event.getStartday().isAfter(now))
                 .toList();
     }
 
@@ -257,6 +271,36 @@ public class EventService {
      */
     public List<Event> getEventsByAreaId(int aid, List<Event> eventList) {
         return eventList.stream().filter(event -> event.getAid() == aid).toList();
+    }
+
+    /**
+     * イベントリストをシャッフルして3つのイベントを取得して、イベントの開始日順にソートする
+     */
+    public List<Event> getEventsByShuffle(List<Event> eventList) {
+        // 可変のイベントリストを作る
+        List<Event> newEventList = new ArrayList<>(eventList);
+        // イベントリストをシャッフルする
+        Collections.shuffle(newEventList);
+        // イベントリストからイベントを3つ取得する
+        List<Event> eventListByShuffle = newEventList.stream().limit(3).toList();
+        // 可変のイベントリストを作る
+        List<Event> newEventListByShuffle = new ArrayList<>(eventListByShuffle);
+        // イベントリストを開始日順にソートする
+        Collections.sort(newEventListByShuffle,
+                (event1, event2) -> event1.getStartday().compareTo(event2.getStartday()));
+        return newEventListByShuffle;
+    }
+
+    /**
+     * イベントリストからイベントの開始日順にソートする
+     */
+    public List<Event> getEventsByStartday(List<Event> eventList) {
+        // 可変のイベントリストを作る
+        List<Event> newEventList = new ArrayList<>(eventList);
+        // イベントリストを開始日順にソートする
+        Collections.sort(newEventList,
+                (event1, event2) -> event1.getStartday().compareTo(event2.getStartday()));
+        return newEventList;
     }
 
 }

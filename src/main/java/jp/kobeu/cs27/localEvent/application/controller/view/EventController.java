@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
-import jp.kobeu.cs27.localEvent.application.form.UserForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.entity.Area;
 import jp.kobeu.cs27.localEvent.domain.entity.Event;
-import jp.kobeu.cs27.localEvent.domain.entity.User;
 import jp.kobeu.cs27.localEvent.domain.service.AreaService;
 import jp.kobeu.cs27.localEvent.domain.service.EventService;
 import lombok.AllArgsConstructor;
@@ -32,8 +31,8 @@ public class EventController {
     private final AreaService areaService;
 
     /**
-     * タグ登録が可能か確認する
-     * タグが登録済みであった場合、タグ登録ページに戻る
+     * 地域登録が可能か確認する
+     * 地域が登録済みであった場合、地域登録ページに戻る
      * 
      * 
      */
@@ -48,10 +47,10 @@ public class EventController {
             return "redirect:/event";
         }
 
-        // タグIDを変数に格納する
+        // 地域IDを変数に格納する
         final int eid = form.getEid();
 
-        // タグが既に存在するか確認する
+        // 地域が既に存在するか確認する
         if (eventService.existsEvent(eid)) {
             attributes.addFlashAttribute("isEventAlreadyExistsError", true);
 
@@ -98,7 +97,8 @@ public class EventController {
      */
 
     @GetMapping("/event/detail")
-    public String showEventDetail(Model model, RedirectAttributes attributes, @RequestParam("eid") int eid) {
+    public String showEventDetail(Model model, RedirectAttributes attributes, @RequestParam("eid") int eid,
+            HttpServletRequest request) {
 
         // イベントが存在しない場合は例外を投げる
         if (!eventService.existsEvent(eid)) {
@@ -131,6 +131,10 @@ public class EventController {
             attributes.addFlashAttribute("isAreaNotFoundError", true);
             return "redirect:/eventlist";
         }
+
+        String referer = request.getHeader("referer");
+        model.addAttribute("fromEventList", referer != null && referer.contains("/eventlist"));
+        model.addAttribute("fromService", referer != null && referer.contains("/service"));
 
         return "eventdetail";
 
@@ -188,6 +192,36 @@ public class EventController {
         // タグとイベントを紐付ける
         try {
             eventService.addTagToEvent(form);
+        } catch (ValidationException e) {
+            attributes.addFlashAttribute("isTagAlreadyExistsError", true);
+            return "redirect:/eventlist";
+        }
+
+        return "redirect:/eventlist";
+
+    }
+
+    /**
+     * イベントとタグを紐付ける
+     */
+    @PostMapping("/event/tag/delete")
+    public String deleteEventTag(Model model, RedirectAttributes attributes,
+            @ModelAttribute @Validated EventTagForm form,
+            BindingResult bindingResult) {
+
+        // イベントIDとタグIDを変数に格納する
+        final int eid = form.getEid();
+        final int tid = form.getTid();
+
+        // フォームにバリデーション違反があった場合、タグ登録ページに戻る
+        if (bindingResult.hasErrors()) {
+            attributes.addFlashAttribute("isTagFormError", true);
+            return "redirect:/eventlist";
+        }
+
+        // タグとイベントを紐付ける
+        try {
+            eventService.deleteTagFromEvent(form);
         } catch (ValidationException e) {
             attributes.addFlashAttribute("isTagAlreadyExistsError", true);
             return "redirect:/eventlist";

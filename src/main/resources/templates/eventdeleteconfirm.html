@@ -11,6 +11,13 @@
     <body>
         <div class="container">
             <div class="row">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/eventlist}">イベントリスト</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">イベント削除確認</li>
+                    </ol>
+                </nav>
                 <table class="table">
                     <thead>
                         <tr>
@@ -27,6 +34,12 @@
                         <input class="btn btn-outline-primary square-button "
                             type="submit"
                             value="削除する">
+                    </form>
+                    <form method="get"
+                        th:action="@{/eventlist}">
+                        <input class="btn btn-outline-primary square-button "
+                            type="submit"
+                            value="やめる">
                     </form>
                 </div>
             </div>

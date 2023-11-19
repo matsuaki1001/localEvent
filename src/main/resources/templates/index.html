@@ -36,18 +36,26 @@
     <body>
         <div class="container  text-center">
             <div class="row">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active"
+                            aria-current="page">Home</li>
+                    </ol>
+                </nav>
                 <div class="col-4">
 
                     <form method="get"
                         th:action="@{/tag}">
-                        <input class="btn btn-outline-primary square-button "
+                        <input
+                            class="btn btn-outline-primary square-button "
                             type="submit"
                             value="タグを追加する">
                     </form>
 
                     <form method="get"
                         th:action="@{/area}">
-                        <input class="btn btn-outline-primary square-button "
+                        <input
+                            class="btn btn-outline-primary square-button "
                             type="submit"
                             value="地域を追加する">
                     </form>
@@ -57,41 +65,45 @@
                 <div class="col-4">
 
                     <form method="get"
-                        th:action="@{/event}">
-                        <input class="btn btn-outline-primary square-button "
-                            type="submit"
-                            value="イベントを追加する">
-                    </form>
-
-                    <form method="get"
-                        th:action="@{/user}">
-                        <input class="btn btn-outline-primary square-button "
-                            type="submit"
-                            value="ユーザの新規登録">
-                    </form>
-
-                    <form method="get"
-                        th:action="@{/login}">
-                        <input class="btn btn-outline-primary square-button "
-                            type="submit"
-                            value="サービス">
-                    </form>
-                </div>
-
-                <div class="col-4">
-
-                    <form method="get"
                         th:action="@{/eventlist}">
-                        <input class="btn btn-outline-primary square-button "
+                        <input
+                            class="btn btn-outline-primary square-button "
                             type="submit"
                             value="イベント一覧">
                     </form>
 
                     <form method="get"
                         th:action="@{/userlist}">
-                        <input class="btn btn-outline-primary square-button "
+                        <input
+                            class="btn btn-outline-primary square-button "
                             type="submit"
                             value="ユーザ一覧">
+                    </form>
+
+                    <form method="get"
+                        th:action="@{/login}">
+                        <input
+                            class="btn btn-outline-primary square-button "
+                            type="submit"
+                            value="サービス">
+                    </form>
+                </div>
+
+                <div class="col-4">
+                    <form method="get"
+                        th:action="@{/event}">
+                        <input
+                            class="btn btn-outline-primary square-button "
+                            type="submit"
+                            value="イベントを追加する">
+                    </form>
+
+                    <form method="get"
+                        th:action="@{/user}">
+                        <input
+                            class="btn btn-outline-primary square-button "
+                            type="submit"
+                            value="ユーザの新規登録">
                     </form>
 
                 </div>

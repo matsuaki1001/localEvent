@@ -1,8 +1,5 @@
 package jp.kobeu.cs27.localEvent.domain.repository;
-
 import java.util.List;
-
-import jp.kobeu.cs27.localEvent.domain.entity.Event;
 import jp.kobeu.cs27.localEvent.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

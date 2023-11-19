@@ -1,6 +1,5 @@
 package jp.kobeu.cs27.localEvent.domain.entity;
 
-import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

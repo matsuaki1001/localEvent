@@ -12,7 +12,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                            <li class="breadcrumb-item active"
+                                aria-current="page">ユーザ追加</li>
+                        </ol>
+                    </nav>
                     <h1>ユーザを追加する</h1>
+
                     <form method="get" th:action="@{/user/confirm}"
                         th:object="${userForm}">
                         <label for="name" class="form-label">ユーザの名前</label>

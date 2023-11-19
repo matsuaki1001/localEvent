@@ -9,7 +9,17 @@
             type="text/javascript"></script>
     </head>
     <body>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/userlist}">ユーザリスト</a></li>
+                <li class="breadcrumb-item active" aria-current="page">ユーザ詳細</li>
+            </ol>
+        </nav>
+   
+
         <h1>ユーザ登録確認</h1>
+
         <table class="table text-dark text-center mb-3 ">
             <tbody>
                 <tr>

@@ -12,6 +12,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                            <li class="breadcrumb-item active"
+                                aria-current="page">地域追加</li>
+                        </ol>
+                    </nav>
                     <h1>地域を追加する</h1>
                     <form method="get" th:action="@{/area/confirm}"
                         th:object="${areaForm}">
@@ -23,7 +30,7 @@
                         <input class="form-control"
                             placeholder="エリアの説明"
                             th:field="*{description}" type=text id="description">
-                        <input class="btn btn-primary" type="submit" value="登録">
+                        <input class="btn btn-primary mb-3" type="submit" value="登録">
                     </form>
 
                 </div>

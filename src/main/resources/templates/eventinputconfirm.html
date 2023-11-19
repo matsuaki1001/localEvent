@@ -10,7 +10,14 @@
     </head>
     <body>
 
-        <h5>イベント登録確認</h5>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/event}">イベント追加</a></li>
+                <li class="breadcrumb-item active" aria-current="page">イベント登録確認</li>
+            </ol>
+        </nav>
+        <h1>イベント登録確認</h1>
 
         <div class="container">
             <div class="row">

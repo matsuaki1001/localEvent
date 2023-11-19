@@ -20,8 +20,8 @@ public class AreaController {
     private final AreaService areaService;
 
     /**
-     * タグ登録が可能か確認する
-     * タグが登録済みであった場合、タグ登録ページに戻る
+     * 地域登録が可能か確認する
+     * 地域が登録済みであった場合、タグ登録ページに戻る
      * 
      * 
      */
@@ -36,10 +36,10 @@ public class AreaController {
             return "redirect:/area";
         }
 
-        // タグIDを変数に格納する
+        // 地域IDを変数に格納する
         final int aid = form.getAid();
 
-        // タグが既に存在するか確認する
+        // 地域が既に存在するか確認する
         if (areaService.existsArea(aid)) {
             attributes.addFlashAttribute("isAreaAlreadyExistsError", true);
             return "redirect:/area";
@@ -54,20 +54,20 @@ public class AreaController {
     }
 
     /**
-     * タグを登録する
+     * 地域を登録する
      */
     @PostMapping("/area/register")
     public String registerArea(Model model, RedirectAttributes attributes, @ModelAttribute @Validated AreaForm form,
             BindingResult bindingResult) {
 
-        // フォームにバリデーション違反があった場合、タグ登録ページに戻る
+        // フォームにバリデーション違反があった場合、地域登録ページに戻る
         if (bindingResult.hasErrors()) {
             attributes.addFlashAttribute("isAreaFormError", true);
 
             return "redirect:/area";
         }
 
-        // タグを登録する
+        // 地域を登録する
         try {
             areaService.createArea(form);
         } catch (ValidationException e) {

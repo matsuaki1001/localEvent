@@ -40,9 +40,10 @@ public class localEventRestController {
         List<Event> eventList = eventService.getEventsByTagIdList(tidList);
         List<Event> eventListByArea = eventService.getEventsByAreaId(aid, eventList);
         List<Event> eventListByOneMonth = eventService.getEventsByOneMonth(eventListByArea);
+        List<Event> eventListByShuffle = eventService.getEventsByShuffle(eventListByOneMonth);
 
         // ユーザを検索し、結果をResponse型でラップして返す
-        return ResponseCreator.succeed(eventListByOneMonth);
+        return ResponseCreator.succeed(eventListByShuffle);
 
     }
 

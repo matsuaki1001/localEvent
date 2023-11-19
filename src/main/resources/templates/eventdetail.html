@@ -11,6 +11,23 @@
 
     <body>
         <div class="container">
+            <nav aria-label="breadcrumb" th:if="${fromEventList}">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/eventlist}">イベントリスト</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">イベント詳細</li>
+                </ol>
+            </nav>
+
+            <nav aria-label="breadcrumb" th:if="${fromService}">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/login}">ログイン</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/service}">サービス</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">イベント詳細</li>
+                </ol>
+            </nav>
+
             <h1>イベント詳細</h1>
             <div class="row">
                 <div class="col-12">

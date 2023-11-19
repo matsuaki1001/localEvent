@@ -9,9 +9,14 @@
       type="text/javascript"></script>
   </head>
   <body>
-
-    <h5>タグ登録確認</h5>
-
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+        <li class="breadcrumb-item"><a th:href="@{/tag}">タグ追加</a></li>
+        <li class="breadcrumb-item active" aria-current="page">タグ登録確認</li>
+      </ol>
+    </nav>
+    <h1>タグ登録確認</h5>
     <table class="table text-dark text-center mb-3 ">
       <tbody>
         <tr>

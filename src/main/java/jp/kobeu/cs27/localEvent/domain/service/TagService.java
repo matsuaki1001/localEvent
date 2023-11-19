@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import jp.kobeu.cs27.localEvent.application.form.TagForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.entity.Tag;
-import jp.kobeu.cs27.localEvent.domain.repository.EventRepository;
 import jp.kobeu.cs27.localEvent.domain.repository.EventTagRepository;
 import jp.kobeu.cs27.localEvent.domain.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TagService {
     private final TagRepository tags;
-    private final EventRepository events;
     private final EventTagRepository eventTags;
 
     /**
