@@ -201,7 +201,7 @@ public class EventService {
                     String.format("Tag id %d not found", tid));
         }
 
-        // イベントにタグを紐付ける
+        // イベントからタグを削除する
         eventTags.deleteByEidAndTid(eid, tid);
     }
 

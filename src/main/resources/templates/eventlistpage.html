@@ -63,53 +63,52 @@
 
                         </tr>
                     </table>
-                    <form method="post" th:action="@{/event/tag}"
-                        th:object="${eventTagForm}">
-                        <select class="form-control"
-                            th:name="eid"
-                            th:id="eid">
-                            <option th:each="event : ${eventList}"
-                                th:value="${event.eid}"
-                                th:field="*{eid}"
-                                th:text="${event.name}"></option>
-                        </select>
-                        <select class="form-control"
-                            th:name="tid"
-                            th:id="tid">
-                            <option th:each="tag : ${tagList}"
-                                th:value="${tag.tid}"
-                                th:field="*{tid}"
-                                th:text="${tag.name}"></option>
-                        </select>
-                        <input
-                            class="btn btn-outline-primary square-button "
-                            type="submit"
-                            value="タグを追加する">
-                    </form>
 
-                    <form method="post" th:action="@{/event/tag/delete}"
-                        th:object="${eventTagForm}">
-                        <select class="form-control"
-                            th:name="eid"
-                            th:id="eid">
-                            <option th:each="event : ${eventList}"
-                                th:value="${event.eid}"
-                                th:field="*{eid}"
-                                th:text="${event.name}"></option>
-                        </select>
-                        <select class="form-control"
-                            th:name="tid"
-                            th:id="tid">
-                            <option th:each="tag : ${tagList}"
-                                th:value="${tag.tid}"
-                                th:field="*{tid}"
-                                th:text="${tag.name}"></option>
-                        </select>
-                        <input
-                            class="btn btn-outline-primary square-button "
-                            type="submit"
-                            value="タグを削除する">
-                    </form>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <form method="post"
+                                    th:object="${eventTagForm}">
+                                    <td>タグ管理</td>
+                                    <td>
+                                        <select class="form-control"
+                                            th:name="eid"
+                                            th:id="eid">
+                                            <option
+                                                th:each="event : ${eventList}"
+                                                th:value="${event.eid}"
+                                                th:field="*{eid}"
+                                                th:text="${event.name}"></option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control"
+                                            th:name="tid"
+                                            th:id="tid">
+                                            <option th:each="tag : ${tagList}"
+                                                th:value="${tag.tid}"
+                                                th:field="*{tid}"
+                                                th:text="'#' + ${tag.name}"></option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="btn btn-outline-primary square-button "
+                                            type="submit"
+                                            th:formaction="@{/event/tag}"
+                                            value="タグを追加する">
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="btn btn-outline-primary square-button "
+                                            type="submit"
+                                            th:formaction="@{/event/tag/delete}"
+                                            value="タグを削除する">
+                                    </td>
+                                </form>
+                            </tr>
+                        </tbody>
+                    </table>
 
                 </div>
             </div>

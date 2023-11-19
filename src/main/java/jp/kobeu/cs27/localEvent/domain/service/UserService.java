@@ -164,12 +164,15 @@ public class UserService {
     }
 
     /**
-     * ユーザとタグの紐付けを削除する
+     * ユーザとタグの紐付けを解除する
      */
-    public void deleteUserTag(int utid) {
+    @Transactional
+    public void deleteTagFromUser(UserTagForm form) {
 
-        int uid = userTags.findByUtid(utid).getUid();
-        int tid = userTags.findByUtid(utid).getTid();
+        // ユーザIDを変数に格納する
+        final int uid = form.getUid();
+        // タグIDを変数に格納する
+        final int tid = form.getTid();
 
         // ユーザが存在しない場合は例外を投げる
         if (!users.existsByUid(uid)) {
@@ -187,8 +190,8 @@ public class UserService {
                     String.format("Tag id %d not found", tid));
         }
 
-        // ユーザとタグの紐付けを削除する
-        userTags.deleteByUtid(utid);
+        // ユーザとタグの紐付けを解除する
+        userTags.deleteByUidAndTid(uid, tid);
     }
 
     /**

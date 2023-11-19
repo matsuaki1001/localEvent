@@ -202,16 +202,12 @@ public class EventController {
     }
 
     /**
-     * イベントとタグを紐付ける
+     * イベントとタグの紐付けを解除する
      */
     @PostMapping("/event/tag/delete")
     public String deleteEventTag(Model model, RedirectAttributes attributes,
             @ModelAttribute @Validated EventTagForm form,
             BindingResult bindingResult) {
-
-        // イベントIDとタグIDを変数に格納する
-        final int eid = form.getEid();
-        final int tid = form.getTid();
 
         // フォームにバリデーション違反があった場合、タグ登録ページに戻る
         if (bindingResult.hasErrors()) {
@@ -219,7 +215,7 @@ public class EventController {
             return "redirect:/eventlist";
         }
 
-        // タグとイベントを紐付ける
+        // タグとイベントを紐付けを解除する
         try {
             eventService.deleteTagFromEvent(form);
         } catch (ValidationException e) {

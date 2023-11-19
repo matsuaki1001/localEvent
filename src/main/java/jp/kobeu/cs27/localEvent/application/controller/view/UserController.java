@@ -182,6 +182,35 @@ public class UserController {
     }
 
     /**
+     * ユーザとタグの紐付けを解除する
+     *
+     * 
+     */
+    @PostMapping("/user/tag/delete")
+    public String deleteUserTag(Model model, RedirectAttributes attributes,
+            @ModelAttribute @Validated UserTagForm form,
+            BindingResult bindingResult) {
+
+        // フォームにバリデーション違反があった場合、タグ登録ページに戻る
+        if (bindingResult.hasErrors()) {
+            attributes.addFlashAttribute("isUserFormError", true);
+
+            return "redirect:/userlist";
+        }
+
+        // タグとユーザの紐付けを解除する
+        try {
+            userService.deleteTagFromUser(form);
+        } catch (ValidationException e) {
+            attributes.addFlashAttribute("isUserAlreadyExistsError", true);
+            return "redirect:/userlist";
+        }
+
+        return "redirect:/userlist";
+
+    }
+
+    /**
      * ユーザ削除画面を表示する
      */
     @GetMapping("/user/delete/{uid}")

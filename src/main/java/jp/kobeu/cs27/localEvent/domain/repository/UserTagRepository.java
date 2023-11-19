@@ -39,4 +39,10 @@ public interface UserTagRepository extends JpaRepository<UserTag, Integer> {
      * ユーザタグが存在するかどうかを返す
      */
     boolean existsByUidAndTid(int uid, int tid);
+
+    /**
+     * ユーザIDとタグIDに対応するユーザタグを削除する
+     */
+    void deleteByUidAndTid(int uid, int tid);
+
 }
