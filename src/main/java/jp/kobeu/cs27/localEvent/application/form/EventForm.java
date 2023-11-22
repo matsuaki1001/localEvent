@@ -44,6 +44,20 @@ public class EventForm {
     // イベントの開催時間の終了
     private LocalTime endtime;
 
+    //　イベントの申込み開始日
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startdayOfApplication;
+
+    // イベントの申込み終了日
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate enddayOfApplication;
+
+    // イベントの申込み開始時間
+    private LocalTime starttimeOfApplication;
+
+    // イベントの申込み終了時間
+    private LocalTime endtimeOfApplication;
+
     // イベントの会場
     private String place;
 
@@ -64,5 +78,8 @@ public class EventForm {
 
     // イベントの定員
     private int capacity;
+
+    //イベントの問い合わせ先
+    private String contact;
 
 }

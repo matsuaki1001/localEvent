@@ -1,8 +1,5 @@
 package jp.kobeu.cs27.localEvent.domain.service;
-
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
-
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
 import jp.kobeu.cs27.localEvent.domain.entity.Event;
@@ -13,6 +10,8 @@ import jp.kobeu.cs27.localEvent.domain.repository.EventTagRepository;
 import jp.kobeu.cs27.localEvent.domain.repository.TagRepository;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+
 import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.*;
 
 import java.time.LocalDate;
@@ -52,8 +51,10 @@ public class EventService {
 
         // イベントをDBに登録し、登録したイベントの情報を戻り値として返す
         return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(), form.getEndday(),
-                form.getStarttime(), form.getEndtime(), form.getPlace(), form.getFee(), form.isParking(),
-                form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), 0));
+                form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(), form.getEnddayOfApplication(),
+                form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(), form.getFee(),
+                form.isParking(),
+                form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact()));
 
     }
 
@@ -78,8 +79,11 @@ public class EventService {
 
         // イベントをDBに登録し、登録したイベントの情報を戻り値として返す
         return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(), form.getEndday(),
-                form.getStarttime(), form.getEndtime(), form.getPlace(), form.getFee(), form.isParking(),
-                form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getCapacity()));
+                form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(), form.getEnddayOfApplication(),
+                form.getStarttimeOfApplication(),
+                form.getEndtimeOfApplication(), form.getPlace(), form.getFee(), form.isParking(),
+                form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(),
+                form.getContact()));
     }
 
     /**
@@ -301,6 +305,56 @@ public class EventService {
         Collections.sort(newEventList,
                 (event1, event2) -> event1.getStartday().compareTo(event2.getStartday()));
         return newEventList;
+    }
+
+    /**
+     * フォームからイベントの情報をモデルに格納する
+     */
+    public void setEventModel(EventForm form, Model model) {
+        model.addAttribute("eid", form.getEid());
+        model.addAttribute("name", form.getName());
+        model.addAttribute("description", form.getDescription());
+        model.addAttribute("startday", form.getStartday());
+        model.addAttribute("endday", form.getEndday());
+        model.addAttribute("starttime", form.getStarttime());
+        model.addAttribute("endtime", form.getEndtime());
+        model.addAttribute("startdayOfApplication", form.getStartdayOfApplication());
+        model.addAttribute("enddayOfApplication", form.getEnddayOfApplication());
+        model.addAttribute("starttimeOfApplication", form.getStarttimeOfApplication());
+        model.addAttribute("endtimeOfApplication", form.getEndtimeOfApplication());
+        model.addAttribute("place", form.getPlace());
+        model.addAttribute("fee", form.getFee());
+        model.addAttribute("parking", form.isParking());
+        model.addAttribute("access", form.getAccess());
+        model.addAttribute("aid", form.getAid());
+        model.addAttribute("organizer", form.getOrganizer());
+        model.addAttribute("capacity", form.getCapacity());
+        model.addAttribute("contact", form.getContact());
+    }
+
+    /**
+     * イベントの各要素をモデルに格納する
+     */
+    public void setEventModel(Event event, Model model) {
+        model.addAttribute("eid", event.getEid());
+        model.addAttribute("name", event.getName());
+        model.addAttribute("description", event.getDescription());
+        model.addAttribute("startday", event.getStartday());
+        model.addAttribute("endday", event.getEndday());
+        model.addAttribute("starttime", event.getStarttime());
+        model.addAttribute("endtime", event.getEndtime());
+        model.addAttribute("startdayOfApplication", event.getStartdayOfApplication());
+        model.addAttribute("enddayOfApplication", event.getEnddayOfApplication());
+        model.addAttribute("starttimeOfApplication", event.getStarttimeOfApplication());
+        model.addAttribute("endtimeOfApplication", event.getEndtimeOfApplication());
+        model.addAttribute("place", event.getPlace());
+        model.addAttribute("fee", event.getFee());
+        model.addAttribute("parking", event.isParking());
+        model.addAttribute("access", event.getAccess());
+        model.addAttribute("aid", event.getAid());
+        model.addAttribute("organizer", event.getOrganizer());
+        model.addAttribute("capacity", event.getCapacity());
+        model.addAttribute("contact", event.getContact());
     }
 
 }

@@ -57,20 +57,7 @@ public class EventController {
             return "redirect:/event";
         }
 
-        model.addAttribute("eid", eid);
-        model.addAttribute("name", form.getName());
-        model.addAttribute("description", form.getDescription());
-        model.addAttribute("startday", form.getStartday());
-        model.addAttribute("endday", form.getEndday());
-        model.addAttribute("starttime", form.getStarttime());
-        model.addAttribute("endtime", form.getEndtime());
-        model.addAttribute("place", form.getPlace());
-        model.addAttribute("fee", form.getFee());
-        model.addAttribute("parking", form.isParking());
-        model.addAttribute("access", form.getAccess());
-        model.addAttribute("aid", form.getAid());
-        model.addAttribute("organizer", form.getOrganizer());
-        model.addAttribute("capacity", form.getCapacity());
+        eventService.setEventModel(form, model);
 
         final int aid = form.getAid();
         try {
@@ -108,20 +95,7 @@ public class EventController {
 
         // イベントを取得する
         Event event = eventService.getEvent(eid);
-        model.addAttribute("eid", event.getEid());
-        model.addAttribute("name", event.getName());
-        model.addAttribute("description", event.getDescription());
-        model.addAttribute("startday", event.getStartday());
-        model.addAttribute("endday", event.getEndday());
-        model.addAttribute("starttime", event.getStarttime());
-        model.addAttribute("endtime", event.getEndtime());
-        model.addAttribute("place", event.getPlace());
-        model.addAttribute("fee", event.getFee());
-        model.addAttribute("parking", event.isParking());
-        model.addAttribute("access", event.getAccess());
-        model.addAttribute("aid", event.getAid());
-        model.addAttribute("organizer", event.getOrganizer());
-        model.addAttribute("capacity", event.getCapacity());
+        eventService.setEventModel(event, model);
 
         final int aid = event.getAid();
         try {
@@ -312,20 +286,7 @@ public class EventController {
 
         // イベント情報をモデルに格納する
         model.addAttribute(new EventForm());
-        model.addAttribute("eid", event.getEid());
-        model.addAttribute("name", event.getName());
-        model.addAttribute("description", event.getDescription());
-        model.addAttribute("startday", event.getStartday());
-        model.addAttribute("endday", event.getEndday());
-        model.addAttribute("starttime", event.getStarttime());
-        model.addAttribute("endtime", event.getEndtime());
-        model.addAttribute("place", event.getPlace());
-        model.addAttribute("fee", event.getFee());
-        model.addAttribute("parking", event.isParking());
-        model.addAttribute("access", event.getAccess());
-        model.addAttribute("aid", event.getAid());
-        model.addAttribute("organizer", event.getOrganizer());
-        model.addAttribute("capacity", event.getCapacity());
+        eventService.setEventModel(event, model);
         model.addAttribute("areaList", areaList);
 
         // イベント情報更新ページ

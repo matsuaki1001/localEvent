@@ -43,6 +43,18 @@ public class Event {
     // イベントの開催時間の終了
     private LocalTime endtime;
 
+    //　イベントの申込み開始日
+    private LocalDate startdayOfApplication;
+
+    // イベントの申込み終了日
+    private LocalDate enddayOfApplication;
+
+    // イベントの申込み開始時間
+    private LocalTime starttimeOfApplication;
+
+    // イベントの申込み終了時間
+    private LocalTime endtimeOfApplication;
+
     // イベントの会場
     private String place;
 
@@ -64,7 +76,7 @@ public class Event {
     // イベントの定員
     private int capacity;
 
-    // ユーザのタグとイベントの一致回数
-    private int count;
+    // イベントの問い合わせ先
+    private String contact;
 
 }

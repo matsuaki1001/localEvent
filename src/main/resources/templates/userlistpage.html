@@ -85,7 +85,7 @@
                                         <option th:each="tag : ${tagList}"
                                             th:value="${tag.tid}"
                                             th:field="*{tid}"
-                                            th:text="${tag.name}"></option>
+                                            th:text="'#'+${tag.name}"></option>
                                     </select>
                                 </td>
                                 <td>

@@ -50,6 +50,22 @@
                                 <td>[[${endtime}]]</td>
                             </tr>
                             <tr>
+                                <th scope="row">イベントの申し込み開始日</th>
+                                <td>[[${startdayOfApplication}]]</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">イベントの申し込み終了日</th>
+                                <td>[[${enddayOfApplication}]]</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">イベントの申し込み開始時間</th>
+                                <td>[[${starttimeOfApplication}]]</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">イベントの申し込み終了時間</th>
+                                <td>[[${endtimeOfApplication}]]</td>
+                            </tr>
+                            <tr>
                                 <th scope="row">イベントの場所</th>
                                 <td>[[${place}]]</td>
                             </tr>
@@ -83,6 +99,10 @@
                                 <th scope="row">イベントの参加人数</th>
                                 <td>[[${capacity}]]</td>
                             </tr>
+                            <tr>
+                                <th scope="row">イベントの問い合わせ先</th>
+                                <td>[[${contact}]]</td>
+                            </tr>
 
                         </tbody>
                     </table>
@@ -99,6 +119,14 @@
                             th:value="${starttime}">
                         <input type="hidden" name="endtime"
                             th:value="${endtime}">
+                        <input type="hidden" name="startdayOfApplication"
+                            th:value="${startdayOfApplication}">
+                        <input type="hidden" name="enddayOfApplication"
+                            th:value="${enddayOfApplication}">
+                        <input type="hidden" name="starttimeOfApplication"
+                            th:value="${starttimeOfApplication}">
+                        <input type="hidden" name="endtimeOfApplication"
+                            th:value="${endtimeOfApplication}">
                         <input type="hidden" name="place" th:value="${place}">
                         <input type="hidden" name="fee" th:value="${fee}">
                         <input type="hidden" name="parking"
@@ -109,6 +137,8 @@
                             th:value="${organizer}">
                         <input type="hidden" name="capacity"
                             th:value="${capacity}">
+                        <input type="hidden" name="contact"
+                            th:value="${contact}">
                         <input class="btn btn-primary" type="submit" value="登録">
                     </form>
                 </div>

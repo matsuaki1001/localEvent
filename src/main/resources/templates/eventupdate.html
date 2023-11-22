@@ -51,6 +51,26 @@
                         <input class="form-control"
                             placeholder="イベントの終了時間"
                             th:field="*{endtime}" type=time id="endtime">
+                        <label for="enddayOfApplication" class="form-label">イベントの申し込み開始日</label>
+                        <input class="form-control"
+                            placeholder="イベントの申し込み開始日"
+                            required th:field="*{startdayOfApplication}"
+                            type=date id="startdayOfApplication">
+                        <label for="enddayOfApplication" class="form-label">イベントの申し込み終了日</label>
+                        <input class="form-control"
+                            placeholder="イベントの申し込み終了日"
+                            required th:field="*{enddayOfApplication}"
+                            type=date id="enddayOfApplication">
+                        <label for="starttimeOfApplication" class="form-label">イベントの申し込み開始時間</label>
+                        <input class="form-control"
+                            placeholder="イベントの申し込み開始時間"
+                            th:field="*{starttimeOfApplication}"
+                            type=time id="starttimeOfApplication">
+                        <label for="endtimeOfApplication" class="form-label">イベントの申し込み終了時間</label>
+                        <input class="form-control"
+                            placeholder="イベントの申し込み終了時間"
+                            th:field="*{endtimeOfApplication}"
+                            type=time id="endtimeOfApplication">
                         <label for="place" class="form-label">イベントの場所</label>
                         <input class="form-control"
                             placeholder="イベントの場所"
@@ -87,6 +107,10 @@
                         <input class="form-control"
                             placeholder="イベントの参加人数"
                             th:field="*{capacity}" type=text id="capacity">
+                        <label for="contact" class="form-label">イベントの問い合わせ先</label>
+                        <input class="form-control"
+                            placeholder="イベントの問い合わせ先"
+                            th:field="*{contact}" type=text id="contact">
                         <input class="btn btn-primary" type="submit"
                             value="更新する">
                     </form>
@@ -99,12 +123,17 @@
                         document.getElementById("endday").value = /*[[${endday}]]*/ "";
                         document.getElementById("starttime").value = /*[[${starttime}]]*/ "";
                         document.getElementById("endtime").value = /*[[${endtime}]]*/ "";
+                        document.getElementById("startdayOfApplication").value = /*[[${startdayOfApplication}]]*/ "";
+                        document.getElementById("enddayOfApplication").value = /*[[${enddayOfApplication}]]*/ "";
+                        document.getElementById("starttimeOfApplication").value = /*[[${starttimeOfApplication}]]*/ "";
+                        document.getElementById("endtimeOfApplication").value = /*[[${endtimeOfApplication}]]*/ "";
                         document.getElementById("place").value = /*[[${place}]]*/ "";
                         document.getElementById("fee").value = /*[[${fee}]]*/ "";
                         document.getElementById("checkbox").checked = /*[[${parking}]]*/ false;
                         document.getElementById("access").value = /*[[${access}]]*/ "";
                         document.getElementById("organaizer").value = /*[[${organaizer}]]*/ "";
                         document.getElementById("capacity").value = /*[[${capacity}]]*/ "";
+                        document.getElementById("contact").value = /*[[${contact}]]*/ "";
                         document.getElementById("aid").selectedIndex = aid - 1;
                     </script>
 

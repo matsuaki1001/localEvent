@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.servlet.http.HttpServletResponse;
-
 import java.util.List;
 
 import jp.kobeu.cs27.localEvent.application.form.AreaForm;
@@ -154,10 +152,9 @@ public class PageController {
       List<Event> eventList = eventService.getEventsByTagIdList(tidList);
       List<Event> eventListByArea = eventService.getEventsByAreaId(aid, eventList);
       List<Event> eventListByOneMonth = eventService.getEventsByOneMonth(eventListByArea);
-      List<Event> eventListByShuffle = eventService.getEventsByShuffle(eventListByOneMonth);
 
       model.addAttribute("user", user);
-      model.addAttribute("eventList", eventListByShuffle);
+      model.addAttribute("eventList", eventListByOneMonth);
       model.addAttribute("eventService", eventService);
 
       return "service";
