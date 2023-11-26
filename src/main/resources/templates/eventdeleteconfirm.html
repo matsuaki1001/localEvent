@@ -29,18 +29,25 @@
                         <td th:text="${eid}"></td>
                         <td th:text="${name}"></td>
                     </table>
-                    <form method="get"
-                        th:action="@{/event/delete/confirm/{eid} (eid=${eid})}">
-                        <input class="btn btn-outline-primary square-button "
-                            type="submit"
-                            value="削除する">
-                    </form>
-                    <form method="get"
-                        th:action="@{/eventlist}">
-                        <input class="btn btn-outline-primary square-button "
-                            type="submit"
-                            value="やめる">
-                    </form>
+                    <div class="col-6">
+                        <form method="get"
+                            th:action="@{/event/delete/confirm/{eid} (eid=${eid})}">
+                            <input
+                                class="btn btn-outline-primary square-button "
+                                type="submit"
+                                value="削除する">
+                        </form>
+                    </div>
+
+                    <div class="col-6">
+                        <form method="get"
+                            th:action="@{/eventlist}">
+                            <input
+                                class="btn btn-outline-primary square-button "
+                                type="submit"
+                                value="やめる">
+                        </form>
+                    </div>
                 </div>
             </div>
         </body>
