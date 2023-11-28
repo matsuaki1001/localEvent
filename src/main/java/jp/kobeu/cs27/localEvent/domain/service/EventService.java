@@ -1,4 +1,5 @@
 package jp.kobeu.cs27.localEvent.domain.service;
+
 import org.springframework.stereotype.Service;
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
@@ -54,7 +55,8 @@ public class EventService {
                 form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(), form.getEnddayOfApplication(),
                 form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(), form.getFee(),
                 form.isParking(),
-                form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact()));
+                form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
+                form.getUrl()));
 
     }
 
@@ -83,7 +85,7 @@ public class EventService {
                 form.getStarttimeOfApplication(),
                 form.getEndtimeOfApplication(), form.getPlace(), form.getFee(), form.isParking(),
                 form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(),
-                form.getContact()));
+                form.getContact(), form.getUrl()));
     }
 
     /**
@@ -330,6 +332,7 @@ public class EventService {
         model.addAttribute("organizer", form.getOrganizer());
         model.addAttribute("capacity", form.getCapacity());
         model.addAttribute("contact", form.getContact());
+        model.addAttribute("url", form.getUrl());
     }
 
     /**
@@ -355,6 +358,7 @@ public class EventService {
         model.addAttribute("organizer", event.getOrganizer());
         model.addAttribute("capacity", event.getCapacity());
         model.addAttribute("contact", event.getContact());
+        model.addAttribute("url", event.getUrl());
     }
 
 }

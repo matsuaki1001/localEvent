@@ -79,4 +79,7 @@ public class Event {
     // イベントの問い合わせ先
     private String contact;
 
+    // イベントのURL
+    private String url;
+
 }

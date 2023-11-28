@@ -111,6 +111,10 @@
                         <input class="form-control"
                             placeholder="イベントの問い合わせ先"
                             th:field="*{contact}" type=text id="contact">
+                        <label for="url" class="form-label">イベントのURL</label>
+                        <input class="form-control"
+                            placeholder="イベントのURL"
+                            th:field="*{url}" type=text id="url">
                         <input class="btn btn-primary" type="submit"
                             value="更新する">
                     </form>
@@ -134,10 +138,11 @@
                         document.getElementById("organaizer").value = /*[[${organaizer}]]*/ "";
                         document.getElementById("capacity").value = /*[[${capacity}]]*/ "";
                         document.getElementById("contact").value = /*[[${contact}]]*/ "";
+                        document.getElementById("url").value = /*[[${url}]]*/ "";
                         document.getElementById("aid").selectedIndex = aid - 1;
                     </script>
 
-                    <h2 th:if="${isEventUpdateSuccess}" class="text-danger">ユーザが更新されました</h2>
+                    <h2 th:if="${isEventUpdateSuccess}" class="text-danger">イベントが更新されました</h2>
 
                 </div>
             </div>
