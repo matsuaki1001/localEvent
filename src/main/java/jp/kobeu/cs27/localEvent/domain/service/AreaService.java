@@ -108,11 +108,8 @@ public class AreaService {
                             "Area %s not found", aid));
         }
 
-        Area area = areas.getReferenceById(aid);
-
         // エリアを削除する
         areas.deleteById(aid);
-        
 
     }
 
