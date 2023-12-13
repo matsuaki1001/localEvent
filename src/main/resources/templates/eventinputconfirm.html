@@ -107,17 +107,11 @@
                                 <th scope="row">イベントのURL</th>
                                 <td>[[${url}]]</td>
                             </tr>
-                            <tr>
-                                <th scope="row">イベントの画像</th>
-                                <td><a
-                                        th:href="${imageLink}"
-                                        target="_blank">画像プレビュー</a></td>
-                            </tr>
 
                         </tbody>
                     </table>
                     <form method="post" th:action="@{/event/register}"
-                        class="mb-3">
+                        class="mb-3" enctype="multipart/form-data">
                         <input type="hidden" name="eid" th:value="${eid}">
                         <input type="hidden" name="name" th:value="${name}">
                         <input type="hidden" name="description"
@@ -150,7 +144,6 @@
                         <input type="hidden" name="contact"
                             th:value="${contact}">
                         <input type="hidden" name="url" th:value="${url}">
-                        <input type="hidden" name="image" th:value="${image}">
                         <input class="btn btn-primary" type="submit" value="登録">
                     </form>
                 </div>

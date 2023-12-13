@@ -47,7 +47,7 @@ public class EventController {
      * 
      * 
      */
-    @PostMapping("/event/confirm")
+    @GetMapping("/event/confirm")
     public String confirmTagResistration(Model model, RedirectAttributes attributes,
             @ModelAttribute @Validated EventForm form, BindingResult bindingResult) {
 
@@ -59,7 +59,6 @@ public class EventController {
             }
             System.out.println("EventForm content: " + form.toString());
             attributes.addFlashAttribute("isEventFormError", true);
-            System.out.println("バリデーションエラー");
             return "redirect:/event";
         }
 
@@ -153,6 +152,10 @@ public class EventController {
         if (bindingResult.hasErrors()) {
             attributes.addFlashAttribute("isEventFormError", true);
             System.out.println("バリデーションエラー");
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                System.out.println("Field: " + error.getObjectName() + ", Error: " + error.getDefaultMessage());
+            }
+            System.out.println("EventForm content: " + form.toString());
             return "redirect:/event";
         }
 
@@ -336,24 +339,26 @@ public class EventController {
             // イベントの画像を取得する
             Blob image = eventEntity.getImage();
 
-            try {
-                // ファイルダウンロードの設定を実施
-                // ファイルの種類は指定しない
-                response.setContentType("application/pdf");
-                response.setHeader("Cache-Control", "private");
-                response.setHeader("Pragma", "");
-                response.setHeader("Content-Disposition", "inline;");
-                // ダウンロードファイルへ出力
-                try (OutputStream out = response.getOutputStream(); InputStream in = image.getBinaryStream()) {
-                    byte[] buffer = new byte[1024];
-                    int bytesRead;
-                    while ((bytesRead = in.read(buffer)) != -1) {
-                        out.write(buffer, 0, bytesRead);
+            if (image != null) {
+                try {
+                    // ファイルダウンロードの設定を実施
+                    // ファイルの種類は指定しない
+                    response.setContentType("application/pdf");
+                    response.setHeader("Cache-Control", "private");
+                    response.setHeader("Pragma", "");
+                    response.setHeader("Content-Disposition", "inline;");
+                    // ダウンロードファイルへ出力
+                    try (OutputStream out = response.getOutputStream(); InputStream in = image.getBinaryStream()) {
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = in.read(buffer)) != -1) {
+                            out.write(buffer, 0, bytesRead);
+                        }
+                        out.flush();
                     }
-                    out.flush();
+                } catch (Exception e) {
+                    System.err.println(e);
                 }
-            } catch (Exception e) {
-                System.err.println(e);
             }
         }
     }

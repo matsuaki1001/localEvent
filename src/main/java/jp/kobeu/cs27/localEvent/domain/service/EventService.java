@@ -55,25 +55,15 @@ public class EventService {
                     String.format("Event id %d already exists", eid));
         }
 
-        try {
-            MultipartFile multipartFile = form.getImage();
-            InputStream inputStream = multipartFile.getInputStream();
-            byte[] bytes = inputStream.readAllBytes();
-            Blob blob = new SerialBlob(bytes);
-            inputStream.close();
-            // イベントをDBに登録し、登録したイベントの情報を戻り値として返す
-            return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(),
-                    form.getEndday(),
-                    form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(),
-                    form.getEnddayOfApplication(),
-                    form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(), form.getFee(),
-                    form.isParking(),
-                    form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
-                    form.getUrl(), blob));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        // イベントをDBに登録し、登録したイベントの情報を戻り値として返す
+        return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(),
+                form.getEndday(),
+                form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(),
+                form.getEnddayOfApplication(),
+                form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(), form.getFee(),
+                form.isParking(),
+                form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
+                form.getUrl(), null));
 
     }
 
@@ -370,6 +360,7 @@ public class EventService {
         model.addAttribute("contact", form.getContact());
         model.addAttribute("url", form.getUrl());
         model.addAttribute("image", form.getImage());
+
     }
 
     /**
