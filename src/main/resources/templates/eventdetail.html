@@ -119,6 +119,12 @@
                                 <th scope="row">イベントのURL</th>
                                 <td>[[${url}]]</td>
                             </tr>
+                            <tr>
+                                <th scope="row">イベントの画像</th>
+                                <td><a
+                                        th:href="@{/event/detail/preview/{eid}(eid=${eid})}"
+                                        target="_blank">画像プレビュー</a></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

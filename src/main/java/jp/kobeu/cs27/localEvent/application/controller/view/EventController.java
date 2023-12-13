@@ -1,6 +1,11 @@
 package jp.kobeu.cs27.localEvent.application.controller.view;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Blob;
 import java.util.List;
+import java.util.Optional;
+import java.util.Base64;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,15 +16,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jp.kobeu.cs27.localEvent.application.form.EventForm;
 import jp.kobeu.cs27.localEvent.application.form.EventTagForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.entity.Area;
 import jp.kobeu.cs27.localEvent.domain.entity.Event;
+import jp.kobeu.cs27.localEvent.domain.repository.EventRepository;
 import jp.kobeu.cs27.localEvent.domain.service.AreaService;
 import jp.kobeu.cs27.localEvent.domain.service.EventService;
 import lombok.AllArgsConstructor;
@@ -30,6 +39,7 @@ public class EventController {
 
     private final EventService eventService;
     private final AreaService areaService;
+    private final EventRepository events;
 
     /**
      * 地域登録が可能か確認する
@@ -64,6 +74,18 @@ public class EventController {
         }
 
         eventService.setEventModel(form, model);
+
+        try {
+            MultipartFile image = form.getImage();
+            InputStream inputStream = image.getInputStream();
+            byte[] bytes = inputStream.readAllBytes();
+            String encodedString = Base64.getEncoder().encodeToString(bytes);
+            String imageLink = "data:application/pdf;base64," + encodedString;
+            model.addAttribute("imageLink", imageLink);
+            inputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         final int aid = form.getAid();
         try {
@@ -300,6 +322,40 @@ public class EventController {
 
         // イベント情報更新ページ
         return "eventupdate";
+    }
+
+    /**
+     * イベント詳細ページで画像のページを表示する
+     */
+    @RequestMapping("/event/detail/preview/{eid}")
+    public void previewEventDetailImage(@PathVariable("eid") int eid, HttpServletResponse response) {
+        // eidからイベントを取得する
+        Optional<Event> event = events.findById(eid);
+        if (event.isPresent()) {
+            Event eventEntity = event.get();
+            // イベントの画像を取得する
+            Blob image = eventEntity.getImage();
+
+            try {
+                // ファイルダウンロードの設定を実施
+                // ファイルの種類は指定しない
+                response.setContentType("application/pdf");
+                response.setHeader("Cache-Control", "private");
+                response.setHeader("Pragma", "");
+                response.setHeader("Content-Disposition", "inline;");
+                // ダウンロードファイルへ出力
+                try (OutputStream out = response.getOutputStream(); InputStream in = image.getBinaryStream()) {
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    while ((bytesRead = in.read(buffer)) != -1) {
+                        out.write(buffer, 0, bytesRead);
+                    }
+                    out.flush();
+                }
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
     }
 
 }
