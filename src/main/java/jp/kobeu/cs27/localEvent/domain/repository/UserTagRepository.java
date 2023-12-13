@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /*
- * ユーザーのリポジトリ
+ * ユーザータグのリポジトリ
  */
 @Repository
 public interface UserTagRepository extends JpaRepository<UserTag, Integer> {
     /**
-     * すべてのユーザーをID順に取得する
+     * すべてのユーザータグをID順に取得する
      * 
      * @param uid ユーザーID
      * 

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -44,7 +45,7 @@ public class EventForm {
     // イベントの開催時間の終了
     private LocalTime endtime;
 
-    //　イベントの申込み開始日
+    // イベントの申込み開始日
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startdayOfApplication;
 
@@ -79,10 +80,13 @@ public class EventForm {
     // イベントの定員
     private int capacity;
 
-    //イベントの問い合わせ先
+    // イベントの問い合わせ先
     private String contact;
 
     // イベントのURL
     private String url;
+
+    // イベントの画像
+    private MultipartFile image;
 
 }

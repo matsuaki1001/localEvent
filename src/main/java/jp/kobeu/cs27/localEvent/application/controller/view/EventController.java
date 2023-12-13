@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,14 +37,19 @@ public class EventController {
      * 
      * 
      */
-    @GetMapping("/event/confirm")
+    @PostMapping("/event/confirm")
     public String confirmTagResistration(Model model, RedirectAttributes attributes,
             @ModelAttribute @Validated EventForm form, BindingResult bindingResult) {
 
         // フォームにバリデーション違反があった場合、タグ登録ページに戻る
         if (bindingResult.hasErrors()) {
+            // エラーログを出力してみる
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                System.out.println("Field: " + error.getObjectName() + ", Error: " + error.getDefaultMessage());
+            }
+            System.out.println("EventForm content: " + form.toString());
             attributes.addFlashAttribute("isEventFormError", true);
-
+            System.out.println("バリデーションエラー");
             return "redirect:/event";
         }
 
@@ -124,8 +130,11 @@ public class EventController {
         // フォームにバリデーション違反があった場合、イベント登録ページに戻る
         if (bindingResult.hasErrors()) {
             attributes.addFlashAttribute("isEventFormError", true);
+            System.out.println("バリデーションエラー");
             return "redirect:/event";
         }
+
+        System.out.println("バリデーションOK");
 
         // イベントを登録する
         try {
@@ -241,7 +250,7 @@ public class EventController {
     /**
      * イベントを更新する
      */
-    @GetMapping("/event/update/confirm/{eid}")
+    @PostMapping("/event/update/confirm/{eid}")
     public String updateEvent(Model model, RedirectAttributes attributes, @PathVariable("eid") int eid,
             @ModelAttribute @Validated EventForm form, BindingResult bindingResult) {
 

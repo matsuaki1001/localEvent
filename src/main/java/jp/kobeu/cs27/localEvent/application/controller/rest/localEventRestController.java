@@ -3,6 +3,7 @@ package jp.kobeu.cs27.localEvent.application.controller.rest;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,6 +46,28 @@ public class localEventRestController {
         // ユーザを検索し、結果をResponse型でラップして返す
         return ResponseCreator.succeed(eventListByShuffle);
 
+    }
+
+    /**
+     * ユーザIDとイベントIDを受け取り、ユーザにイベントを追加する
+     * 
+     * @param uid
+     * @param eid
+     * @return
+     */
+    @PostMapping("/postEid")
+    public Response<String> getEid(@RequestParam("uid") int uid, @RequestParam("eid") int eid) {
+        userService.addEventToUser(uid, eid);
+        return ResponseCreator.succeed("uidとeidを受け取りました");
+    }
+
+    /**
+     * ユーザIDを受け取り、ユーザがお気に入りのイベントを表示する
+     */
+    @GetMapping("/favorite")
+    public Response<List<Event>> getFavoriteEvent(@RequestParam("uid") int uid) {
+        List<Event> eventList = userService.getEventsByUid(uid);
+        return ResponseCreator.succeed(eventList);
     }
 
 }

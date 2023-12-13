@@ -12,13 +12,18 @@ import jp.kobeu.cs27.localEvent.domain.repository.TagRepository;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.*;
 
+import java.io.InputStream;
+import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.sql.rowset.serial.SerialBlob;
 
 import lombok.RequiredArgsConstructor;
 
@@ -50,13 +55,25 @@ public class EventService {
                     String.format("Event id %d already exists", eid));
         }
 
-        // イベントをDBに登録し、登録したイベントの情報を戻り値として返す
-        return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(), form.getEndday(),
-                form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(), form.getEnddayOfApplication(),
-                form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(), form.getFee(),
-                form.isParking(),
-                form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
-                form.getUrl()));
+        try {
+            MultipartFile multipartFile = form.getImage();
+            InputStream inputStream = multipartFile.getInputStream();
+            byte[] bytes = inputStream.readAllBytes();
+            Blob blob = new SerialBlob(bytes);
+            inputStream.close();
+            // イベントをDBに登録し、登録したイベントの情報を戻り値として返す
+            return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(),
+                    form.getEndday(),
+                    form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(),
+                    form.getEnddayOfApplication(),
+                    form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(), form.getFee(),
+                    form.isParking(),
+                    form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
+                    form.getUrl(), blob));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
 
@@ -79,13 +96,32 @@ public class EventService {
                     String.format("event id %d not found", eid));
         }
 
-        // イベントをDBに登録し、登録したイベントの情報を戻り値として返す
-        return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(), form.getEndday(),
-                form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(), form.getEnddayOfApplication(),
-                form.getStarttimeOfApplication(),
-                form.getEndtimeOfApplication(), form.getPlace(), form.getFee(), form.isParking(),
-                form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(),
-                form.getContact(), form.getUrl()));
+        try {
+            MultipartFile multipartFile = form.getImage();
+            InputStream inputStream = multipartFile.getInputStream();
+            byte[] bytes = inputStream.readAllBytes();
+            Blob blob = new SerialBlob(bytes);
+            inputStream.close();
+            // イベントをDBに登録し、登録したイベントの情報を戻り値として返す
+            return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(),
+                    form.getEndday(),
+                    form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(),
+                    form.getEnddayOfApplication(),
+                    form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(), form.getFee(),
+                    form.isParking(),
+                    form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
+                    form.getUrl(), blob));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(),
+                    form.getEndday(),
+                    form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(),
+                    form.getEnddayOfApplication(),
+                    form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(), form.getFee(),
+                    form.isParking(),
+                    form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
+                    form.getUrl(), null));
+        }
     }
 
     /**
@@ -333,6 +369,7 @@ public class EventService {
         model.addAttribute("capacity", form.getCapacity());
         model.addAttribute("contact", form.getContact());
         model.addAttribute("url", form.getUrl());
+        model.addAttribute("image", form.getImage());
     }
 
     /**
@@ -359,6 +396,7 @@ public class EventService {
         model.addAttribute("capacity", event.getCapacity());
         model.addAttribute("contact", event.getContact());
         model.addAttribute("url", event.getUrl());
+        model.addAttribute("image", event.getImage());
     }
 
 }

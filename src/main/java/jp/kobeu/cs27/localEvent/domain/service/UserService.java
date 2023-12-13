@@ -1,7 +1,6 @@
 package jp.kobeu.cs27.localEvent.domain.service;
 
-import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.USER_ALREADY_EXISTS;
-import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.USER_DOES_NOT_EXIST;
+import static jp.kobeu.cs27.localEvent.configuration.exception.ErrorCode.*;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,10 +8,14 @@ import jp.kobeu.cs27.localEvent.application.form.UserForm;
 import jp.kobeu.cs27.localEvent.application.form.UserTagForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.ValidationException;
 import jp.kobeu.cs27.localEvent.domain.entity.Area;
+import jp.kobeu.cs27.localEvent.domain.entity.Event;
 import jp.kobeu.cs27.localEvent.domain.entity.Tag;
 import jp.kobeu.cs27.localEvent.domain.entity.User;
+import jp.kobeu.cs27.localEvent.domain.entity.UserEvent;
 import jp.kobeu.cs27.localEvent.domain.entity.UserTag;
+import jp.kobeu.cs27.localEvent.domain.repository.EventRepository;
 import jp.kobeu.cs27.localEvent.domain.repository.TagRepository;
+import jp.kobeu.cs27.localEvent.domain.repository.UserEventRepository;
 import jp.kobeu.cs27.localEvent.domain.repository.UserRepository;
 import jp.kobeu.cs27.localEvent.domain.repository.UserTagRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +26,9 @@ public class UserService {
 
     private final UserRepository users;
     private final TagRepository tags;
+    private final EventRepository events;
     private final UserTagRepository userTags;
+    private final UserEventRepository userEvents;
     private final AreaService areaService;
 
     /**
@@ -243,5 +248,52 @@ public class UserService {
     public boolean existsUserTag(int uid, int tid) {
         return userTags.existsByUidAndTid(uid, tid);
     }
+
+    /**
+     * ユーザイベントが存在するかどうかを返す
+     * 
+     */
+    public boolean existsUserEvent(int uid, int eid) {
+        return userEvents.existsByUidAndEid(uid, eid);
+    }
+
+    /**
+     * ユーザとイベントを紐付ける
+     */
+
+    public void addEventToUser(int uid, int eid) {
+
+        // ユーザが存在しない場合は例外を投げる
+        if (!users.existsByUid(uid)) {
+            throw new ValidationException(
+                    USER_DOES_NOT_EXIST,
+                    "get the User",
+                    String.format("User id %d not found", uid));
+        }
+
+        // イベントが存在しない場合は例外を投げる
+        if (!events.existsByEid(eid)) {
+            throw new ValidationException(
+                    EVENT_DOES_NOT_EXIST,
+                    "get the Event",
+                    String.format("Event id %d not found", eid));
+        }
+
+        // ユーザイベントが既に存在するか確認する
+        if (!existsUserEvent(uid, eid)) {
+            // ユーザとイベントを紐付ける
+            userEvents.save(new UserEvent(0, uid, eid));
+        }
+
+    }
+
+    /**
+     * ユーザIDから紐付けられているイベントの一覧を取得する
+     */
+     public List<Event> getEventsByUid(int uid) {
+         List<UserEvent> userEventList = userEvents.findAllByUid(uid);
+         List<Integer> eidList = userEventList.stream().map(UserEvent::getEid).toList();
+         return events.findAllByEidIn(eidList);
+     }
 
 }

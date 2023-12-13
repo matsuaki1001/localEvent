@@ -23,9 +23,9 @@
                         </ol>
                     </nav>
                     <h1>イベントを更新する</h1>
-                    <form method="get"
+                    <form method="post"
                         th:action="@{/event/update/confirm/{eid}(eid=${eid})}"
-                        th:object="${eventForm}">
+                        th:object="${eventForm}" enctype="multipart/form-data">
                         <label for="name" class="form-label">イベントの名前</label>
                         <input class="form-control"
                             placeholder="イベントの名前" th:field="*{name}"
@@ -115,6 +115,14 @@
                         <input class="form-control"
                             placeholder="イベントのURL"
                             th:field="*{url}" type=text id="url">
+                        <div>
+                            <div class="form-group mb-3">
+                                <label for="image" class="form-label">イベントの画像</label>
+                                <input class="form-control-file"
+                                    placeholder="イベントの画像"
+                                    th:field="*{image}" type="file" id="image">
+                            </div>
+                        </div>
                         <input class="btn btn-primary" type="submit"
                             value="更新する">
                     </form>
