@@ -48,7 +48,7 @@ public class EventController {
      * 
      */
     @GetMapping("/event/confirm")
-    public String confirmTagResistration(Model model, RedirectAttributes attributes,
+    public String confirmEventResistration(Model model, RedirectAttributes attributes,
             @ModelAttribute @Validated EventForm form, BindingResult bindingResult) {
 
         // フォームにバリデーション違反があった場合、タグ登録ページに戻る
@@ -74,16 +74,18 @@ public class EventController {
 
         eventService.setEventModel(form, model);
 
-        try {
-            MultipartFile image = form.getImage();
-            InputStream inputStream = image.getInputStream();
-            byte[] bytes = inputStream.readAllBytes();
-            String encodedString = Base64.getEncoder().encodeToString(bytes);
-            String imageLink = "data:application/pdf;base64," + encodedString;
-            model.addAttribute("imageLink", imageLink);
-            inputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (form.getImage() != null) {
+            try {
+                MultipartFile image = form.getImage();
+                InputStream inputStream = image.getInputStream();
+                byte[] bytes = inputStream.readAllBytes();
+                String encodedString = Base64.getEncoder().encodeToString(bytes);
+                String imageLink = "data:application/pdf;base64," + encodedString;
+                model.addAttribute("imageLink", imageLink);
+                inputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         final int aid = form.getAid();
