@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
+import jp.kobeu.cs27.localEvent.application.form.PostEidForm;
 import jp.kobeu.cs27.localEvent.configuration.exception.*;
 import jp.kobeu.cs27.localEvent.domain.service.*;
 import jp.kobeu.cs27.localEvent.domain.entity.Event;
@@ -42,22 +44,17 @@ public class localEventRestController {
         List<Event> eventListByArea = eventService.getEventsByAreaId(aid, eventList);
         List<Event> eventListByOneMonth = eventService.getEventsByOneMonth(eventListByArea);
         List<Event> eventListByShuffle = eventService.getEventsByShuffle(eventListByOneMonth);
+        List<Event> imageNullEventList = eventService.setNullImage(eventListByShuffle);
 
         // ユーザを検索し、結果をResponse型でラップして返す
-        return ResponseCreator.succeed(eventListByShuffle);
+        return ResponseCreator.succeed(imageNullEventList);
 
     }
 
-    /**
-     * ユーザIDとイベントIDを受け取り、ユーザにイベントを追加する
-     * 
-     * @param uid
-     * @param eid
-     * @return
-     */
+
     @PostMapping("/postEid")
-    public Response<String> getEid(@RequestParam("uid") int uid, @RequestParam("eid") int eid) {
-        userService.addEventToUser(uid, eid);
+    public Response<String> getEid(@RequestBody PostEidForm body) {
+        userService.addEventToUser(body.getUid(), body.getEid());
         return ResponseCreator.succeed("uidとeidを受け取りました");
     }
 
@@ -67,7 +64,8 @@ public class localEventRestController {
     @GetMapping("/favorite")
     public Response<List<Event>> getFavoriteEvent(@RequestParam("uid") int uid) {
         List<Event> eventList = userService.getEventsByUid(uid);
-        return ResponseCreator.succeed(eventList);
+        List<Event> imageNullEventList = eventService.setNullImage(eventList);
+        return ResponseCreator.succeed(imageNullEventList);
     }
 
 }

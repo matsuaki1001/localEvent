@@ -268,7 +268,7 @@ public class EventService {
         LocalDate oneMonthLater = now.plusMonths(1); // 1ヶ月後の日付を取得
 
         return eventList.stream()
-                .filter(event -> !event.getStartday().isAfter(oneMonthLater) && event.getStartday().isAfter(now))
+                .filter(event -> !event.getStartday().isAfter(oneMonthLater) && !event.getStartday().isBefore(now))
                 .toList();
     }
 
@@ -388,6 +388,17 @@ public class EventService {
         model.addAttribute("contact", event.getContact());
         model.addAttribute("url", event.getUrl());
         model.addAttribute("image", event.getImage());
+    }
+
+    /**
+     * イベントリストのimageの要素をnullにする
+     */
+    public List<Event> setNullImage(List<Event> eventList) {
+        List<Event> newEventList = new ArrayList<>(eventList);
+        for (Event event : newEventList) {
+            event.setImage(null);
+        }
+        return newEventList;
     }
 
 }
