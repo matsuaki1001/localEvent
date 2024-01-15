@@ -324,6 +324,7 @@ public class EventController {
         model.addAttribute(new EventForm());
         eventService.setEventModel(event, model);
         model.addAttribute("areaList", areaList);
+        model.addAttribute("event", event);
 
         // イベント情報更新ページ
         return "eventupdate";

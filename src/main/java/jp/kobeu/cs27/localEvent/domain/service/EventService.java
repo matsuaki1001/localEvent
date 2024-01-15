@@ -63,7 +63,7 @@ public class EventService {
                 form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(), form.getFee(),
                 form.isParking(),
                 form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
-                form.getUrl(), null));
+                form.getUrl(), null, false));
 
     }
 
@@ -86,6 +86,9 @@ public class EventService {
                     String.format("event id %d not found", eid));
         }
 
+        Event event = events.findById(eid).get();
+        Blob image = event.getImage();
+
         try {
             MultipartFile multipartFile = form.getImage();
             InputStream inputStream = multipartFile.getInputStream();
@@ -93,14 +96,38 @@ public class EventService {
             Blob blob = new SerialBlob(bytes);
             inputStream.close();
             // イベントをDBに登録し、登録したイベントの情報を戻り値として返す
-            return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(),
-                    form.getEndday(),
-                    form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(),
-                    form.getEnddayOfApplication(),
-                    form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(), form.getFee(),
-                    form.isParking(),
-                    form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
-                    form.getUrl(), blob));
+            if (form.getImage().isEmpty() && image == null) {
+                return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(),
+                        form.getEndday(),
+                        form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(),
+                        form.getEnddayOfApplication(),
+                        form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(),
+                        form.getFee(),
+                        form.isParking(),
+                        form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
+                        form.getUrl(), null, false));
+            } else if (form.getImage().isEmpty() && image != null) {
+                return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(),
+                        form.getEndday(),
+                        form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(),
+                        form.getEnddayOfApplication(),
+                        form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(),
+                        form.getFee(),
+                        form.isParking(),
+                        form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
+                        form.getUrl(), image, true));
+            }
+            else {
+                return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(),
+                        form.getEndday(),
+                        form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(),
+                        form.getEnddayOfApplication(),
+                        form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(),
+                        form.getFee(),
+                        form.isParking(),
+                        form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
+                        form.getUrl(), blob, true));
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(),
@@ -110,7 +137,7 @@ public class EventService {
                     form.getStarttimeOfApplication(), form.getEndtimeOfApplication(), form.getPlace(), form.getFee(),
                     form.isParking(),
                     form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
-                    form.getUrl(), null));
+                    form.getUrl(), null, false));
         }
     }
 

@@ -90,4 +90,7 @@ public class Event {
     @Lob
     private Blob image;
 
+    // イベントの画像があるか
+    private boolean imageExist;
+
 }
