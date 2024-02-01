@@ -15,7 +15,8 @@
                 <div class="col-12 mb-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                            <li class="breadcrumb-item"><a
+                                    th:href="@{/}">Home</a></li>
                             <li class="breadcrumb-item"><a
                                     th:href="@{/eventlist}">イベントリスト</a></li>
                             <li class="breadcrumb-item active"
@@ -30,11 +31,14 @@
                         <input class="form-control"
                             placeholder="イベントの名前" th:field="*{name}"
                             type=text id="name">
-                        <label for="description" class="form-label">イベントの説明</label>
+                        <label for="description"
+                            class="form-label">イベントの説明</label>
                         <input class="form-control"
                             placeholder="イベントの説明"
-                            th:field="*{description}" type=text id="description">
-                        <label for="startday" class="form-label">イベントの開始日</label>
+                            th:field="*{description}" type=text
+                            id="description">
+                        <label for="startday"
+                            class="form-label">イベントの開始日</label>
                         <input class="form-control"
                             placeholder="イベントの開始日"
                             required th:field="*{startday}" type=date
@@ -43,30 +47,36 @@
                         <input class="form-control"
                             placeholder="イベントの終了日"
                             th:field="*{endday}" type=date id="endday">
-                        <label for="starttime" class="form-label">イベントの開始時間</label>
+                        <label for="starttime"
+                            class="form-label">イベントの開始時間</label>
                         <input class="form-control"
                             placeholder="イベントの開始時間"
                             th:field="*{starttime}" type=time id="starttime">
-                        <label for="endtime" class="form-label">イベントの終了時間</label>
+                        <label for="endtime"
+                            class="form-label">イベントの終了時間</label>
                         <input class="form-control"
                             placeholder="イベントの終了時間"
                             th:field="*{endtime}" type=time id="endtime">
-                        <label for="enddayOfApplication" class="form-label">イベントの申し込み開始日</label>
+                        <label for="enddayOfApplication"
+                            class="form-label">イベントの申し込み開始日</label>
                         <input class="form-control"
                             placeholder="イベントの申し込み開始日"
                             th:field="*{startdayOfApplication}"
                             type=date id="startdayOfApplication">
-                        <label for="enddayOfApplication" class="form-label">イベントの申し込み終了日</label>
+                        <label for="enddayOfApplication"
+                            class="form-label">イベントの申し込み終了日</label>
                         <input class="form-control"
                             placeholder="イベントの申し込み終了日"
                             th:field="*{enddayOfApplication}"
                             type=date id="enddayOfApplication">
-                        <label for="starttimeOfApplication" class="form-label">イベントの申し込み開始時間</label>
+                        <label for="starttimeOfApplication"
+                            class="form-label">イベントの申し込み開始時間</label>
                         <input class="form-control"
                             placeholder="イベントの申し込み開始時間"
                             th:field="*{starttimeOfApplication}"
                             type=time id="starttimeOfApplication">
-                        <label for="endtimeOfApplication" class="form-label">イベントの申し込み終了時間</label>
+                        <label for="endtimeOfApplication"
+                            class="form-label">イベントの申し込み終了時間</label>
                         <input class="form-control"
                             placeholder="イベントの申し込み終了時間"
                             th:field="*{endtimeOfApplication}"
@@ -99,15 +109,18 @@
                                 th:field="*{aid}"
                                 th:text="${area.name}"></option>
                         </select>
-                        <label for="organaizer" class="form-label">イベントの主催者</label>
+                        <label for="organizer"
+                            class="form-label">イベントの主催者</label>
                         <input class="form-control"
                             placeholder="イベントの主催者"
-                            th:field="*{organizer}" type=text id="organaizer">
-                        <label for="capacity" class="form-label">イベントの参加人数</label>
+                            th:field="*{organizer}" type=text id="organizer">
+                        <label for="capacity"
+                            class="form-label">イベントの参加人数</label>
                         <input class="form-control"
                             placeholder="イベントの参加人数"
                             th:field="*{capacity}" type=text id="capacity">
-                        <label for="contact" class="form-label">イベントの問い合わせ先</label>
+                        <label for="contact"
+                            class="form-label">イベントの問い合わせ先</label>
                         <input class="form-control"
                             placeholder="イベントの問い合わせ先"
                             th:field="*{contact}" type=text id="contact">
@@ -117,12 +130,13 @@
                             th:field="*{url}" type=text id="url">
                         <div>
                             <div class="form-group mb-3">
-                                <label for="image" class="form-label">イベントの画像</label>
+                                <label for="image"
+                                    class="form-label">イベントの画像</label>
                                 <input class="form-control-file"
                                     placeholder="イベントの画像"
                                     th:field="*{image}" type="file" id="image">
                             </div>
-                        </div>      
+                        </div>
                         <input class="btn btn-primary" type="submit"
                             value="更新する">
                     </form>
@@ -143,14 +157,15 @@
                         document.getElementById("fee").value = /*[[${fee}]]*/ "";
                         document.getElementById("checkbox").checked = /*[[${parking}]]*/ false;
                         document.getElementById("access").value = /*[[${access}]]*/ "";
-                        document.getElementById("organaizer").value = /*[[${organaizer}]]*/ "";
+                        document.getElementById("organizer").value = /*[[${organizer}]]*/ "";
                         document.getElementById("capacity").value = /*[[${capacity}]]*/ "";
                         document.getElementById("contact").value = /*[[${contact}]]*/ "";
                         document.getElementById("url").value = /*[[${url}]]*/ "";
                         document.getElementById("aid").selectedIndex = aid - 1;
                     </script>
 
-                    <h2 th:if="${isEventUpdateSuccess}" class="text-danger">イベントが更新されました</h2>
+                    <h2 th:if="${isEventUpdateSuccess}"
+                        class="text-danger">イベントが更新されました</h2>
 
                 </div>
             </div>
