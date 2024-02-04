@@ -96,7 +96,7 @@ public class EventService {
             Blob blob = new SerialBlob(bytes);
             inputStream.close();
             // イベントをDBに登録し、登録したイベントの情報を戻り値として返す
-            if (form.getImage().isEmpty() && image == null) {
+            if (form.getImage().getSize() == 0 && image == null) {
                 return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(),
                         form.getEndday(),
                         form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(),
@@ -106,7 +106,7 @@ public class EventService {
                         form.isParking(),
                         form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
                         form.getUrl(), null, false));
-            } else if (form.getImage().isEmpty() && image != null) {
+            } else if (form.getImage().getSize() == 0 && image != null) {
                 return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(),
                         form.getEndday(),
                         form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(),
