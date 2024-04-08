@@ -136,6 +136,13 @@
                                     placeholder="イベントの画像"
                                     th:field="*{image}" type="file" id="image">
                             </div>
+
+                            <div class="text-center mb-3">
+                                <a
+                                    th:href="@{/event/update/deleteImage/{eid}(eid=${eid})}"
+                                    class="btn btn-secondary">画像を削除する</a>
+                            </div>
+
                         </div>
                         <input class="btn btn-primary" type="submit"
                             value="更新する">

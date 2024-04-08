@@ -51,7 +51,6 @@ public class localEventRestController {
 
     }
 
-
     @PostMapping("/postEid")
     public Response<String> getEid(@RequestBody PostEidForm body) {
         userService.addEventToUser(body.getUid(), body.getEid());

@@ -116,8 +116,7 @@ public class EventService {
                         form.isParking(),
                         form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
                         form.getUrl(), image, true));
-            }
-            else {
+            } else {
                 return events.save(new Event(eid, form.getName(), form.getDescription(), form.getStartday(),
                         form.getEndday(),
                         form.getStarttime(), form.getEndtime(), form.getStartdayOfApplication(),
@@ -139,6 +138,23 @@ public class EventService {
                     form.getAccess(), form.getAid(), form.getOrganizer(), form.getCapacity(), form.getContact(),
                     form.getUrl(), null, false));
         }
+    }
+
+    /**
+     * イベントの画像をnullにして，imageExistsをfalseにする
+     * 
+     * @param eid
+     */
+    public void deleteEventImage(int eid) {
+        Event event = events.findById(eid).get();
+        events.save(new Event(eid, event.getName(), event.getDescription(), event.getStartday(),
+                event.getEndday(),
+                event.getStarttime(), event.getEndtime(), event.getStartdayOfApplication(),
+                event.getEnddayOfApplication(),
+                event.getStarttimeOfApplication(), event.getEndtimeOfApplication(), event.getPlace(), event.getFee(),
+                event.isParking(),
+                event.getAccess(), event.getAid(), event.getOrganizer(), event.getCapacity(), event.getContact(),
+                event.getUrl(), null, false));
     }
 
     /**

@@ -366,4 +366,19 @@ public class EventController {
         }
     }
 
+    /**
+     * イベント更新ページで画像を消去する
+     */
+    @RequestMapping("/event/update/deleteImage/{eid}")
+    public String deleteEventImage(Model model, RedirectAttributes attributes, @PathVariable("eid") int eid) {
+        // イベントが存在しない場合は例外を投げる
+        if (!eventService.existsEvent(eid)) {
+            attributes.addFlashAttribute("isEventNotFoundError", true);
+            return "redirect:/event/update/" + eid;
+        }
+        // イベントの画像を消去する
+        eventService.deleteEventImage(eid);
+        return "redirect:/event/update/" + eid;
+    }
+
 }
